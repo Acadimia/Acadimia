@@ -1,0 +1,11 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "Acadimia.Web\\Acadimia.Web.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
