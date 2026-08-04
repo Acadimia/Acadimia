@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Acadimia.Data.Models
 {
-    public class groups : BaseModel
+    public class Group : BaseModel
     {
 
         public int Id { get; set; }
