@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Acadimia.Data.Models
 {
-    public class Migrations
+    public class Migration
     {
         public int Id { get; set; }
         public string migration { get; set; }

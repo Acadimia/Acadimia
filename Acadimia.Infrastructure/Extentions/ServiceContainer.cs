@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SubscriberManagementSystem.Infrastructure.Extentions
+namespace Acadimia.Infrastructure.Extentions
 {
     public static class ServiceContainer
     {

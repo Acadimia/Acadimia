@@ -14,8 +14,7 @@ namespace Acadimia.Data.Models
 
         public int TeacherId { get; set; }
         public Teacher Teacher { get; set; }
-        public int UserId { get; set; }
-
+        public string UserId { get; set; }
         public User User { get; set; }
 
         

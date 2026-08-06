@@ -11,8 +11,11 @@ namespace Acadimia.Data.Models
 
         public string Name { get; set; }
 
-        public int gradeId { get; set; }
-        public int teacherId { get; set; }
+        public int GradeId { get; set; }
+        public Grade Grade { get; set; }
+
+        public int TeacherId { get; set; }
+        public Teacher Teacher { get; set; }
 
     }
 }

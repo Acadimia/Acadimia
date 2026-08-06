@@ -18,8 +18,6 @@ namespace Acadimia.Data.DbContext
         {
             //SeedHelper.Seed(builder);
             base.OnModelCreating(builder);
-            //builder.Entity<UserType>().HasQueryFilter(x => !x.IsDeleted);
-            //builder.Entity<Page>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Student>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Teacher>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Group>().HasQueryFilter(x => !x.IsDeleted);
@@ -27,7 +25,29 @@ namespace Acadimia.Data.DbContext
             builder.Entity<Father>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<UserType>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Page>().HasQueryFilter(x => !x.IsDeleted);
+            
+            builder.Entity<TrackStudentTransfers>(entity =>
+            {
+                entity.HasOne(t => t.Student)
+                      .WithMany()
+                      .HasForeignKey(t => t.StudentId)
+                      .OnDelete(DeleteBehavior.Restrict);
 
+                entity.HasOne(t => t.Grade)
+                      .WithMany()
+                      .HasForeignKey(t => t.GradeId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(t => t.Teacher)
+                      .WithMany()
+                      .HasForeignKey(t => t.TeacherId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(t => t.User)
+                      .WithMany()
+                      .HasForeignKey(t => t.UserId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
         }
 
 
@@ -43,7 +63,9 @@ namespace Acadimia.Data.DbContext
         public DbSet<Group> Groups { get; set; }
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<TrackStudentTransfers> TrackStudentTransfers { get; set; }
 
+        public DbSet<Migration> Migrations { get; set; }
 
     }
 
