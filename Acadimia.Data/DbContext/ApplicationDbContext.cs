@@ -25,7 +25,18 @@ namespace Acadimia.Data.DbContext
             builder.Entity<Father>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<UserType>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Page>().HasQueryFilter(x => !x.IsDeleted);
-            
+            builder.Entity<Group>(entity =>
+            {
+                entity.HasOne(g => g.Grade)
+                      .WithMany()
+                      .HasForeignKey(g => g.GradeId)
+                      .OnDelete(DeleteBehavior.Cascade); // keep this one cascading
+
+                entity.HasOne(g => g.Teacher)
+                      .WithMany()
+                      .HasForeignKey(g => g.TeacherId)
+                      .OnDelete(DeleteBehavior.Restrict); // break the second cascade path
+            });
             builder.Entity<TrackStudentTransfers>(entity =>
             {
                 entity.HasOne(t => t.Student)

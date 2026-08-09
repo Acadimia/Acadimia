@@ -741,7 +741,7 @@ namespace Acadimia.Data.Migrations
                     b.HasOne("Acadimia.Data.Models.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Grade");

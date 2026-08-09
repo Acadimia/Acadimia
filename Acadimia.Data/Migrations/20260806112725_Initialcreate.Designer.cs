@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Acadimia.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260806111409_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260806112725_Initialcreate")]
+    partial class Initialcreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -744,7 +744,7 @@ namespace Acadimia.Data.Migrations
                     b.HasOne("Acadimia.Data.Models.Teacher", "Teacher")
                         .WithMany()
                         .HasForeignKey("TeacherId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Grade");
