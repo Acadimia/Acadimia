@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Fast.Data.SeedHeper
+namespace Acadimia.Data.SeedHeper
 {
     public static class SeedHelper
     {

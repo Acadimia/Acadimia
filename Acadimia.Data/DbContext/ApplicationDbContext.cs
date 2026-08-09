@@ -73,6 +73,7 @@ namespace Acadimia.Data.DbContext
         public DbSet<Father> Fathers { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Grade> Grades { get; set; }
+        public DbSet<Nationality> Nationalities { get; set; }
         public DbSet<Teacher> Teachers { get; set; }
         public DbSet<TrackStudentTransfers> TrackStudentTransfers { get; set; }
 

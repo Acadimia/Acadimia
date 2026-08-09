@@ -61,11 +61,38 @@ namespace Acadimia.Data.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to هذه الثابت يحتوي على ثوابت  فرعية ولا يمكن حذفها.
+        /// </summary>
+        public static string ConstantHasChildren {
+            get {
+                return ResourceManager.GetString("ConstantHasChildren", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to لا يمكن حذف آخر مستخدم.
+        /// </summary>
+        public static string DeleteLastUser {
+            get {
+                return ResourceManager.GetString("DeleteLastUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed.
         /// </summary>
         public static string Failed {
             get {
                 return ResourceManager.GetString("Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to خطأ في التحقق، يُرجى التحقق من المدخلات الخاصة بك والمحاولة مرة أخرى.
+        /// </summary>
+        public static string Invalid {
+            get {
+                return ResourceManager.GetString("Invalid", resourceCulture);
             }
         }
         
@@ -93,6 +120,33 @@ namespace Acadimia.Data.Resources {
         public static string Success {
             get {
                 return ResourceManager.GetString("Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to البريد الإلكتروني موجود بالفعل، يُرجى اختيار بريد إلكتروني مختلف.
+        /// </summary>
+        public static string UniqueEmail {
+            get {
+                return ResourceManager.GetString("UniqueEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الاسم موجود بالفعل، يُرجى اختيار اسم مختلف.
+        /// </summary>
+        public static string UniqueName {
+            get {
+                return ResourceManager.GetString("UniqueName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to رقم الهاتف موجود بالفعل، يُرجى اختيار رقم هاتف مختلف.
+        /// </summary>
+        public static string UniquePhoneNo {
+            get {
+                return ResourceManager.GetString("UniquePhoneNo", resourceCulture);
             }
         }
     }

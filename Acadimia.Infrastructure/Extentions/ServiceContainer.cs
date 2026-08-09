@@ -1,5 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-//using Acadimia.Infrastructure.Services.Constants;
+﻿using Acadimia.Infrastructure.Services.Constants;
+using Acadimia.Infrastructure.Services.Pages;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace Acadimia.Infrastructure.Extentions
 
             //services.AddTransient<IClaimsService, ClaimsService>();
             //services.AddTransient<IClaimsService, ClaimsService>();
+            services.AddTransient<IPagesService, PagesService>();
 
             return services;
         }

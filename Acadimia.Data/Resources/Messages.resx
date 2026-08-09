@@ -117,8 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ConstantHasChildren" xml:space="preserve">
+    <value>هذه الثابت يحتوي على ثوابت  فرعية ولا يمكن حذفها</value>
+    <comment>This constant has children and cannot be deleted</comment>
+  </data>
+  <data name="DeleteLastUser" xml:space="preserve">
+    <value>لا يمكن حذف آخر مستخدم</value>
+    <comment>Cannot delete the last user</comment>
+  </data>
   <data name="Failed" xml:space="preserve">
     <value>Failed</value>
+  </data>
+  <data name="Invalid" xml:space="preserve">
+    <value>خطأ في التحقق، يُرجى التحقق من المدخلات الخاصة بك والمحاولة مرة أخرى</value>
+    <comment>Validation Error, Please check your inputs and try again</comment>
   </data>
   <data name="name" xml:space="preserve">
     <value />
@@ -129,5 +141,17 @@
   </data>
   <data name="Success" xml:space="preserve">
     <value>Success</value>
+  </data>
+  <data name="UniqueEmail" xml:space="preserve">
+    <value>البريد الإلكتروني موجود بالفعل، يُرجى اختيار بريد إلكتروني مختلف</value>
+    <comment>Email is already exists, Please choose a different Email</comment>
+  </data>
+  <data name="UniqueName" xml:space="preserve">
+    <value>الاسم موجود بالفعل، يُرجى اختيار اسم مختلف</value>
+    <comment>Name is already exists, Please choose a different Name</comment>
+  </data>
+  <data name="UniquePhoneNo" xml:space="preserve">
+    <value>رقم الهاتف موجود بالفعل، يُرجى اختيار رقم هاتف مختلف</value>
+    <comment>رقم الهاتف موجود بالفعل، يُرجى اختيار رقم هاتف مختلف</comment>
   </data>
 </root>
