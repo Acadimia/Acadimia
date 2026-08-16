@@ -61,6 +61,24 @@ namespace Acadimia.Data.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to النوع.
+        /// </summary>
+        public static string Category {
+            get {
+                return ResourceManager.GetString("Category", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Password.
+        /// </summary>
+        public static string ConfirmPassword {
+            get {
+                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to هذه الثابت يحتوي على ثوابت  فرعية ولا يمكن حذفها.
         /// </summary>
         public static string ConstantHasChildren {
@@ -79,11 +97,38 @@ namespace Acadimia.Data.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to الايميل.
+        /// </summary>
+        public static string Email {
+            get {
+                return ResourceManager.GetString("Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed.
         /// </summary>
         public static string Failed {
             get {
                 return ResourceManager.GetString("Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الجنس.
+        /// </summary>
+        public static string Gender {
+            get {
+                return ResourceManager.GetString("Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to رقم الهوية.
+        /// </summary>
+        public static string Id {
+            get {
+                return ResourceManager.GetString("Id", resourceCulture);
             }
         }
         
@@ -97,11 +142,65 @@ namespace Acadimia.Data.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to InvalidEmail.
         /// </summary>
-        public static string name {
+        public static string InvalidEmail {
             get {
-                return ResourceManager.GetString("name", resourceCulture);
+                return ResourceManager.GetString("InvalidEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to البريد الإلكتروني او كلمة المرور غير صحيحة .
+        /// </summary>
+        public static string InvalidEmailOrPasswoed {
+            get {
+                return ResourceManager.GetString("InvalidEmailOrPasswoed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  {0} : تنسيق الرقم غير صالح.
+        /// </summary>
+        public static string InvalidNumber {
+            get {
+                return ResourceManager.GetString("InvalidNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الاسم.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to الاسم بالانجليزي.
+        /// </summary>
+        public static string NameEn {
+            get {
+                return ResourceManager.GetString("NameEn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Password.
+        /// </summary>
+        public static string NewPassword {
+            get {
+                return ResourceManager.GetString("NewPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Old Password.
+        /// </summary>
+        public static string OldPassword {
+            get {
+                return ResourceManager.GetString("OldPassword", resourceCulture);
             }
         }
         
@@ -111,6 +210,42 @@ namespace Acadimia.Data.Resources {
         public static string PageHasChildren {
             get {
                 return ResourceManager.GetString("PageHasChildren", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to رقم الموبيل.
+        /// </summary>
+        public static string PhoneNumber {
+            get {
+                return ResourceManager.GetString("PhoneNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  {0} : حقل إلزامي.
+        /// </summary>
+        public static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  {0} : يجب ان تكون عدد الاحرف على الاقل {2} ولا يتعدى {1}.
+        /// </summary>
+        public static string StringLengthValidation {
+            get {
+                return ResourceManager.GetString("StringLengthValidation", resourceCulture);
             }
         }
         
@@ -147,6 +282,15 @@ namespace Acadimia.Data.Resources {
         public static string UniquePhoneNo {
             get {
                 return ResourceManager.GetString("UniquePhoneNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to نوع المستخدم.
+        /// </summary>
+        public static string UserType {
+            get {
+                return ResourceManager.GetString("UserType", resourceCulture);
             }
         }
     }

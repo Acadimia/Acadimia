@@ -3,7 +3,7 @@
     "Name": "New Profile",
     "Projects": [
       {
-        "Path": "Acadimia.Web\\Acadimia.Web.csproj",
+        "Path": "Acadimia.Api\\Acadimia.Api.csproj",
         "Action": "Start"
       }
     ]

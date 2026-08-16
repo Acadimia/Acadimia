@@ -9,7 +9,8 @@ using System.Security.Claims;
 
 namespace Acadimia.Web.Controllers
 {
-    [Authorize]
+    [ApiController]
+    [Route("api/[controller]/[action]")]
     public class BaseController : Controller
     {
         //public override async void OnActionExecuting(ActionExecutingContext context)

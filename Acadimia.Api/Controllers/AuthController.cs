@@ -2,7 +2,7 @@
 using Acadimia.Data.Resources;
 using Acadimia.Infrastructure.Services;
 using Acadimia.Web.Helper.Claims;
-//using Acadimia.Web.ViewModel.Auth;
+using Acadimia.Web.ViewModel.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,36 +12,37 @@ using System.Timers;
 
 namespace Acadimia.Web.Controllers
 {
-	[AllowAnonymous]
+    [AllowAnonymous]
     public class AuthController : BaseController
     {
         private readonly SignInManager<User> _signInManager;
-		private readonly UserManager<User> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IClaimsService _claimsService;
         private readonly ILogger<AuthController> _logger;
 
 
         public AuthController(
-			SignInManager<User> signInManager,
-			UserManager<User> userManager,
-			IClaimsService claimsService,
-			ILogger<AuthController> logger)
-		{
-			_signInManager = signInManager;
-			_userManager = userManager;
-			_claimsService = claimsService;
+            SignInManager<User> signInManager,
+            UserManager<User> userManager,
+            IClaimsService claimsService,
+            ILogger<AuthController> logger)
+        {
+            _signInManager = signInManager;
+            _userManager = userManager;
+            _claimsService = claimsService;
             _logger = logger;
         }
 
-		[HttpGet]
+
+        [HttpPost("login")]
         public IActionResult Login(string returnUrl = null)
         {
-			ViewData["ReturnUrl"] = returnUrl;
-			return View();
+            ViewData["ReturnUrl"] = returnUrl;
+            return View();
         }
 
         [HttpPost]
-        public async Task<OperationResult> Login(LoginViewModel input)
+        public async Task<OperationResult> Login(LoginDTO input)
         {
             var result = new OperationResult();
 
@@ -91,9 +92,9 @@ namespace Acadimia.Web.Controllers
 
             return result;
         }
-        
+
         [HttpPost]
-        public async Task<OperationResult> Login2(LoginViewModel input)
+        public async Task<OperationResult> Login2(LoginDTO input)
         {
             var result = new OperationResult();
             System.Timers.Timer timer = new System.Timers.Timer();
@@ -181,16 +182,16 @@ namespace Acadimia.Web.Controllers
 
 
         [HttpGet]
-		public async Task<IActionResult> Logout()
-		{
+        public async Task<IActionResult> Logout()
+        {
             await _signInManager.SignOutAsync();
-			return RedirectToAction("Login");
-		}
+            return RedirectToAction("Login");
+        }
 
-		[HttpGet]
-		public IActionResult EmailChanged() => View();
-        
-		[HttpGet]
+        [HttpGet]
+        public IActionResult EmailChanged() => View();
+
+        [HttpGet]
         public IActionResult NotFound() => View();
 
     }

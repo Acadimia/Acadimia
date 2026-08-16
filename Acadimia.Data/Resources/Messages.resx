@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Category" xml:space="preserve">
+    <value>النوع</value>
+  </data>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
   <data name="ConstantHasChildren" xml:space="preserve">
     <value>هذه الثابت يحتوي على ثوابت  فرعية ولا يمكن حذفها</value>
     <comment>This constant has children and cannot be deleted</comment>
@@ -125,19 +131,58 @@
     <value>لا يمكن حذف آخر مستخدم</value>
     <comment>Cannot delete the last user</comment>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>الايميل</value>
+  </data>
   <data name="Failed" xml:space="preserve">
     <value>Failed</value>
+  </data>
+  <data name="Gender" xml:space="preserve">
+    <value>الجنس</value>
+  </data>
+  <data name="Id" xml:space="preserve">
+    <value>رقم الهوية</value>
   </data>
   <data name="Invalid" xml:space="preserve">
     <value>خطأ في التحقق، يُرجى التحقق من المدخلات الخاصة بك والمحاولة مرة أخرى</value>
     <comment>Validation Error, Please check your inputs and try again</comment>
   </data>
-  <data name="name" xml:space="preserve">
-    <value />
-    <comment>الاسم</comment>
+  <data name="InvalidEmail" xml:space="preserve">
+    <value>InvalidEmail</value>
+  </data>
+  <data name="InvalidEmailOrPasswoed" xml:space="preserve">
+    <value>البريد الإلكتروني او كلمة المرور غير صحيحة </value>
+    <comment>Invalid Email or Passwoed</comment>
+  </data>
+  <data name="InvalidNumber" xml:space="preserve">
+    <value> {0} : تنسيق الرقم غير صالح</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>الاسم</value>
+  </data>
+  <data name="NameEn" xml:space="preserve">
+    <value>الاسم بالانجليزي</value>
+  </data>
+  <data name="NewPassword" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="OldPassword" xml:space="preserve">
+    <value>Old Password</value>
   </data>
   <data name="PageHasChildren" xml:space="preserve">
     <value>PageHasChildren</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="PhoneNumber" xml:space="preserve">
+    <value>رقم الموبيل</value>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value> {0} : حقل إلزامي</value>
+  </data>
+  <data name="StringLengthValidation" xml:space="preserve">
+    <value> {0} : يجب ان تكون عدد الاحرف على الاقل {2} ولا يتعدى {1}</value>
   </data>
   <data name="Success" xml:space="preserve">
     <value>Success</value>
@@ -153,5 +198,8 @@
   <data name="UniquePhoneNo" xml:space="preserve">
     <value>رقم الهاتف موجود بالفعل، يُرجى اختيار رقم هاتف مختلف</value>
     <comment>رقم الهاتف موجود بالفعل، يُرجى اختيار رقم هاتف مختلف</comment>
+  </data>
+  <data name="UserType" xml:space="preserve">
+    <value>نوع المستخدم</value>
   </data>
 </root>
