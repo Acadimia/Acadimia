@@ -61,6 +61,15 @@ namespace Acadimia.Data.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تم التفعيل بنجاح.
+        /// </summary>
+        public static string Activation {
+            get {
+                return ResourceManager.GetString("Activation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to النوع.
         /// </summary>
         public static string Category {
@@ -84,6 +93,15 @@ namespace Acadimia.Data.Resources {
         public static string ConstantHasChildren {
             get {
                 return ResourceManager.GetString("ConstantHasChildren", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تم إلغاء  التفعيل  بنجاح.
+        /// </summary>
+        public static string Deactivation {
+            get {
+                return ResourceManager.GetString("Deactivation", resourceCulture);
             }
         }
         

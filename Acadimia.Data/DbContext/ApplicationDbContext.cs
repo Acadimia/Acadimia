@@ -5,6 +5,7 @@ using Acadimia.Data.Models;
 using System.Net.Mail;
 using System.Reflection.Emit;
 using System.Security.Principal;
+using Acadimia.Data.SeedHeper;
 
 namespace Acadimia.Data.DbContext
 {
@@ -16,7 +17,7 @@ namespace Acadimia.Data.DbContext
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //SeedHelper.Seed(builder);
+            SeedHelper.Seed(builder);
             base.OnModelCreating(builder);
             builder.Entity<Student>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Teacher>().HasQueryFilter(x => !x.IsDeleted);

@@ -38,8 +38,7 @@ namespace Acadimia.Data.SeedHeper
             };
 
             // set user password hash 
-            adminUser.PasswordHash = new PasswordHasher<User>().HashPassword(adminUser, "academiaadmin");
-
+            adminUser.PasswordHash = "0594727849Ziad#";
             // seed user
             builder.Entity<User>().HasData(adminUser);
 

@@ -4,6 +4,7 @@ using Acadimia.Data.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Acadimia.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260818104250_newmigration")]
+    partial class newmigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2747,8 +2750,8 @@ namespace Acadimia.Data.Migrations
                             Id = "D3E20CBB-2AD1-4D55-9A1E-4CEEC5B4CDE3",
                             AccessFailedCount = 0,
                             Avatar = "default_avatar.png",
-                            ConcurrencyStamp = "04dfc155-9708-48d8-aaf2-d1158d345e3d",
-                            CreatedOn = new DateTime(2026, 8, 18, 14, 6, 18, 553, DateTimeKind.Local).AddTicks(1302),
+                            ConcurrencyStamp = "77d8d173-7d86-400b-975f-7a4ecbc830e7",
+                            CreatedOn = new DateTime(2026, 8, 18, 13, 42, 49, 291, DateTimeKind.Local).AddTicks(7721),
                             Email = "admin@Academia.com",
                             EmailConfirmed = false,
                             GenderId = 2,
@@ -2757,10 +2760,10 @@ namespace Acadimia.Data.Migrations
                             LockoutEnabled = false,
                             Name = "Academia Admin",
                             NormalizedUserName = "ADMIN@Academia.COM",
-                            PasswordHash = "0594727849Ziad#",
+                            PasswordHash = "AQAAAAIAAYagAAAAEPi7zHV998Yw+puOvGLldoK5gN3MTy25WArmlj9/7DgKvYvvrYhZNbkBjpwVu+oqFQ==",
                             PhoneNumber = "",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "498da5f1-869b-4722-9ed9-6c1836ef3c22",
+                            SecurityStamp = "e8df2c7c-8596-4e02-b255-d08f6a975e5a",
                             TwoFactorEnabled = false,
                             UserName = "admin@Academia.com",
                             UserTypeId = 1
@@ -3062,14 +3065,14 @@ namespace Acadimia.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2026, 8, 18, 14, 6, 18, 550, DateTimeKind.Local).AddTicks(2482),
+                            CreatedOn = new DateTime(2026, 8, 18, 13, 42, 49, 289, DateTimeKind.Local).AddTicks(5623),
                             IsDeleted = false,
                             Name = "مدير النظام"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2026, 8, 18, 14, 6, 18, 553, DateTimeKind.Local).AddTicks(94),
+                            CreatedOn = new DateTime(2026, 8, 18, 13, 42, 49, 291, DateTimeKind.Local).AddTicks(6875),
                             IsDeleted = false,
                             Name = "مستخدم"
                         });
