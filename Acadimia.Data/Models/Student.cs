@@ -14,7 +14,9 @@ namespace Acadimia.Data.Models
         public Father Father { get; set; }
 
         public int Grade_id { get; set; }
+
         public Grade Grade { get; set; }
+
         public string WhatsAppNumber { get; set; }
 
     }
