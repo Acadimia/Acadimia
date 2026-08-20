@@ -131,6 +131,10 @@
     <value>هذه الثابت يحتوي على ثوابت  فرعية ولا يمكن حذفها</value>
     <comment>This constant has children and cannot be deleted</comment>
   </data>
+  <data name="CurrentPassword" xml:space="preserve">
+    <value>كلمة المرور الحالية</value>
+    <comment>CurrentPassword</comment>
+  </data>
   <data name="Deactivation" xml:space="preserve">
     <value>تم إلغاء  التفعيل  بنجاح</value>
     <comment>Deactivation was completed successfully</comment>
@@ -144,6 +148,10 @@
   </data>
   <data name="Failed" xml:space="preserve">
     <value>Failed</value>
+  </data>
+  <data name="FailedDeleteLoggedAccount" xml:space="preserve">
+    <value>لا يمكنك حذف حسابك الخاص</value>
+    <comment>You cannot delete your own account</comment>
   </data>
   <data name="Gender" xml:space="preserve">
     <value>الجنس</value>

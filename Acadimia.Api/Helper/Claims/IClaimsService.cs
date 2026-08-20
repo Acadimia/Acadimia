@@ -1,6 +1,6 @@
 ﻿using Acadimia.Data.Models;
 
-namespace Acadimia.Web.Helper.Claims
+namespace Acadimia.Api.Helper.Claims
 {
     public interface IClaimsService
     {

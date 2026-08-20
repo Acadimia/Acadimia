@@ -1,8 +1,8 @@
 ﻿using Acadimia.Data.Models;
 using Acadimia.Data.Resources;
 using Acadimia.Infrastructure.Services;
-using Acadimia.Web.Helper.Claims;
-using Acadimia.Web.ViewModel.Auth;
+using Acadimia.Api.Helper.Claims;
+using Acadimia.Infrastructure.Dtos.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

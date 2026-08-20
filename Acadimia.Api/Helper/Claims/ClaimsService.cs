@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
-namespace Acadimia.Web.Helper.Claims
+namespace Acadimia.Api.Helper.Claims
 {
     public class ClaimsService : IClaimsService
     {

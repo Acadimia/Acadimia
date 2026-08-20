@@ -97,6 +97,15 @@ namespace Acadimia.Data.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to كلمة المرور الحالية.
+        /// </summary>
+        public static string CurrentPassword {
+            get {
+                return ResourceManager.GetString("CurrentPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تم إلغاء  التفعيل  بنجاح.
         /// </summary>
         public static string Deactivation {
@@ -129,6 +138,15 @@ namespace Acadimia.Data.Resources {
         public static string Failed {
             get {
                 return ResourceManager.GetString("Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to لا يمكنك حذف حسابك الخاص.
+        /// </summary>
+        public static string FailedDeleteLoggedAccount {
+            get {
+                return ResourceManager.GetString("FailedDeleteLoggedAccount", resourceCulture);
             }
         }
         

@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Acadimia.Data.Models;
-//using Acadimia.Data.SeedHeper;
+using Acadimia.Data.SeedHeper;
 using System.Net.Mail;
 using System.Reflection.Emit;
 using System.Security.Principal;
-using Acadimia.Data.SeedHeper;
 
 namespace Acadimia.Data.DbContext
 {

@@ -1,7 +1,7 @@
 ﻿using Acadimia.Data.Resources;
 using System.ComponentModel.DataAnnotations;
 
-namespace Acadimia.Web.ViewModel.Auth
+namespace Acadimia.Infrastructure.Dtos.Auth
 {
     public class LoginDTO
     {
