@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Acadimia.Infrastructure.Dtos.Auth
 {
-    public class LoginDTO
+    public class LoginDto
     {
         [Display(Name = "Email", ResourceType = typeof(Messages))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Messages))]

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 
-namespace Acadimia.Web.Controllers
+namespace Acadimia.Api.Controllers
 {
     public class PageController : BaseController
     {

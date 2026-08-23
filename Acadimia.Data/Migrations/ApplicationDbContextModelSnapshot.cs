@@ -2402,27 +2402,6 @@ namespace Acadimia.Data.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Acadimia.Data.Models.Nationality", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("NameAr")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NameEn")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Nationalities");
-                });
-
             modelBuilder.Entity("Acadimia.Data.Models.Notification", b =>
                 {
                     b.Property<int>("Id")
@@ -3222,6 +3201,9 @@ namespace Acadimia.Data.Migrations
                     b.Property<int>("GradeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Grade_id")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -3484,8 +3466,8 @@ namespace Acadimia.Data.Migrations
                             Id = "D3E20CBB-2AD1-4D55-9A1E-4CEEC5B4CDE3",
                             AccessFailedCount = 0,
                             Avatar = "default_avatar.png",
-                            ConcurrencyStamp = "04dfc155-9708-48d8-aaf2-d1158d345e3d",
-                            CreatedOn = new DateTime(2026, 8, 18, 14, 6, 18, 553, DateTimeKind.Local).AddTicks(1302),
+                            ConcurrencyStamp = "ced9d2cc-9a9f-4b58-a6cc-d97344c6ef0d",
+                            CreatedOn = new DateTime(2026, 8, 20, 16, 10, 22, 576, DateTimeKind.Local).AddTicks(7127),
                             Email = "admin@Academia.com",
                             EmailConfirmed = false,
                             GenderId = 2,
@@ -3497,7 +3479,7 @@ namespace Acadimia.Data.Migrations
                             PasswordHash = "0594727849Ziad#",
                             PhoneNumber = "",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "498da5f1-869b-4722-9ed9-6c1836ef3c22",
+                            SecurityStamp = "76363698-052e-496f-af7c-5e53f22b4482",
                             TwoFactorEnabled = false,
                             UserName = "admin@Academia.com",
                             UserTypeId = 1
@@ -3799,14 +3781,14 @@ namespace Acadimia.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2026, 8, 18, 14, 6, 18, 550, DateTimeKind.Local).AddTicks(2482),
+                            CreatedOn = new DateTime(2026, 8, 20, 16, 10, 22, 574, DateTimeKind.Local).AddTicks(3013),
                             IsDeleted = false,
                             Name = "مدير النظام"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2026, 8, 18, 14, 6, 18, 553, DateTimeKind.Local).AddTicks(94),
+                            CreatedOn = new DateTime(2026, 8, 20, 16, 10, 22, 576, DateTimeKind.Local).AddTicks(6156),
                             IsDeleted = false,
                             Name = "مستخدم"
                         });

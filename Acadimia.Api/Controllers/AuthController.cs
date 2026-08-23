@@ -10,7 +10,7 @@ using System.Diagnostics;
 using System.Timers;
 
 
-namespace Acadimia.Web.Controllers
+namespace Acadimia.Api.Controllers
 {
     [AllowAnonymous]
     public class AuthController : BaseController
@@ -42,7 +42,7 @@ namespace Acadimia.Web.Controllers
         //}
 
         [HttpPost]
-        public async Task<OperationResult> Login(LoginDTO input)
+        public async Task<OperationResult> Login(LoginDto input)
         {
             var result = new OperationResult();
 
@@ -94,7 +94,7 @@ namespace Acadimia.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<OperationResult> Login2(LoginDTO input)
+        public async Task<OperationResult> Login2(LoginDto input)
         {
             var result = new OperationResult();
             System.Timers.Timer timer = new System.Timers.Timer();

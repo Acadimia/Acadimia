@@ -2,7 +2,7 @@ using Acadimia.Data.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace Acadimia.Controllers
+namespace Acadimia.Api.Controllers
 {
     public class HomeController : Controller
     {

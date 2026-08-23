@@ -6,7 +6,7 @@ using Acadimia.Infrastructure.Services.UserPermissions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Acadimia.Web.Controllers
+namespace Acadimia.Api.Controllers
 {
     public class UserPermissionController : BaseController
     {

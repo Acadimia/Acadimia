@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
 
-namespace Acadimia.Web.Controllers
+namespace Acadimia.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]

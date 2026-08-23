@@ -11,7 +11,7 @@ using Acadimia.Api.Helper.Files;
 using Newtonsoft.Json;
 using Acadimia.Infrastructure.Dtos.User;
 
-namespace Acadimia.Web.Controllers
+namespace Acadimia.Api.Controllers
 {
     public class UserController : BaseController
     {

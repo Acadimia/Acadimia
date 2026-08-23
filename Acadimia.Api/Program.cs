@@ -1,3 +1,5 @@
+using Acadimia.Api.Helper.Claims;
+using Acadimia.Api.Helper.Files;
 using Acadimia.Data.DbContext;
 using Acadimia.Data.Models;
 using Acadimia.Infrastructure.AutoMapper;
@@ -50,9 +52,12 @@ builder.Services.ConfigureApplicationCookie(options =>
     // options.AccessDeniedPath = new PathString("/Auth/Accessdenied");
 });
 
-// Configure AutoMapper for v13+
+// AutoMapper 
 builder.Services.AddAutoMapper(cfg => cfg.AddMaps(AppDomain.CurrentDomain.GetAssemblies()));
-
+// File Service.
+builder.Services.AddTransient<IFileService, FileService>();
+// Claims Service.
+builder.Services.AddScoped<IClaimsService, ClaimsService>();
 // Register Custom Services
 builder.Services.RegisterServices();
 
@@ -88,5 +93,6 @@ app.UseSwaggerUI(c =>
 });
 
 app.MapStaticAssets();
+app.MapControllers();  
 
 app.Run();
