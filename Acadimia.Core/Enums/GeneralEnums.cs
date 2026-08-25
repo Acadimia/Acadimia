@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acadimia.Data.Enums
+namespace Acadimia.Core.Enums
 {
     public enum GeneralEnums
     {

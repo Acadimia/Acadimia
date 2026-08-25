@@ -1,4 +1,4 @@
-namespace Acadimia.Data.Enums
+namespace Acadimia.Core.Enums
 {
     // Which side of the wallet a WalletTransaction row shows up on:
     // In  = money received into the wallet (e.g. TopUp, InstructorCredit)

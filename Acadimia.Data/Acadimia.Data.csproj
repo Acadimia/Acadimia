@@ -21,6 +21,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Acadimia.Core\Acadimia.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<Compile Update="Resources\Messages.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>

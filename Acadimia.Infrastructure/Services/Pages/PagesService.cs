@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Acadimia.Data.Resources;
 using Acadimia.Data.DbContext;
-using Acadimia.Data.Enums;
+using Acadimia.Core.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 

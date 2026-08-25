@@ -1,4 +1,4 @@
-﻿using Acadimia.Data.Enums;
+﻿using Acadimia.Core.Enums;
 using Acadimia.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

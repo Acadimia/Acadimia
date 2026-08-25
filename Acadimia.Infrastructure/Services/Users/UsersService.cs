@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
 using Acadimia.Data.Resources;
 using Acadimia.Data.DbContext;
-using Acadimia.Data.Enums;
+using Acadimia.Core.Enums;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 

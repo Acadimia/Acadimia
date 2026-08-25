@@ -45,6 +45,21 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("FrontendPolicy", policy =>
+    {
+        policy.WithOrigins(
+                "https://your-frontend-domain.com",   // production frontend
+                "http://localhost:3000"                // local dev (React/Vue/Angular default)
+              )
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials(); // needed if you use cookies (your Identity cookie auth relies on this)
+    });
+});
+
+
 builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = new PathString("/Auth/login");
@@ -68,6 +83,11 @@ builder.Services.AddSwaggerGen(c =>
 });
 
 var app = builder.Build();
+
+app.UseHttpsRedirection();
+app.UseRouting();
+
+app.UseCors("FrontendPolicy");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
