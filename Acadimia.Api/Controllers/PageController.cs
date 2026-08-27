@@ -1,10 +1,10 @@
 ﻿using Acadimia.Data.Models;
 using Acadimia.Data.Resources;
 using Acadimia.Infrastructure.Dtos;
-using Acadimia.Infrastructure.Dtos.Pages;
 using Acadimia.Infrastructure.Services;
 using Acadimia.Infrastructure.Services.Pages;
 using Microsoft.AspNetCore.Mvc;
+using Acadimia.Infrastructure.Dtos.Pages;
 
 namespace Acadimia.Api.Controllers
 {
@@ -60,28 +60,14 @@ namespace Acadimia.Api.Controllers
             var result = new OperationResult(false, Messages.Invalid);
             if (!ModelState.IsValid)
             {
-                result.Message = string.Join("<br>  ", ModelState.Values
+                var message = string.Join("<br>  ", ModelState.Values
                     .SelectMany(v => v.Errors)
                     .Select(e => e.ErrorMessage));
+                result.Message = message;
                 return result;
             }
 
-            var entity = new Page
-            {
-                Id = input.Id,
-                Name = input.Name,
-                NameEn = input.NameEn,
-                Link = input.Link,
-                Icon = input.Icon,
-                InMenu = input.InMenu,
-                ParentId = input.ParentId,
-                IsActive = input.IsActive,
-                IsAjax = input.IsAjax,
-                ModuleId = input.ModuleId,
-                CategoryId = input.CategoryId
-            };
-
-            return await _pagesService.CreateEditAsync(entity);
+            return await _pagesService.CreateEditAsync(input);
         }
 
         [HttpDelete] // Delete Page

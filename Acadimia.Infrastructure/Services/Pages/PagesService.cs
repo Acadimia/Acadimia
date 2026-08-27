@@ -1,16 +1,17 @@
-﻿using Acadimia.Data.Models;
+﻿using Acadimia.Core.Enums;
+using Acadimia.Data.DbContext;
+using Acadimia.Data.Models;
+using Acadimia.Data.Resources;
+using Acadimia.Infrastructure.Dtos.Pages;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using System.Linq.Dynamic.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Text;
 using System.Threading.Tasks;
-using Acadimia.Data.Resources;
-using Acadimia.Data.DbContext;
-using Acadimia.Core.Enums;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Http;
 
 namespace Acadimia.Infrastructure.Services.Pages
 {
@@ -60,18 +61,51 @@ namespace Acadimia.Infrastructure.Services.Pages
             return new Page();
         }
 
-        public async Task<OperationResult> CreateEditAsync(Page input)
+        // Acadimia.Infrastructure/Services/Pages/PagesService.cs — replace the existing CreateEditAsync
+        public async Task<OperationResult> CreateEditAsync(PageInputDto input)
         {
             var result = new OperationResult();
             try
             {
                 if (input.Id == 0)
                 {
-                    await _context.Pages.AddAsync(input);
+                    var page = new Page
+                    {
+                        Name = input.Name,
+                        NameEn = input.NameEn,
+                        Link = input.Link,
+                        Icon = input.Icon,
+                        InMenu = input.InMenu,
+                        IsActive = input.IsActive,
+                        IsAjax = input.IsAjax,
+                        ParentId = input.ParentId,
+                        ModuleId = input.ModuleId,
+                        CategoryId = input.CategoryId
+                    };
+
+                    await _context.Pages.AddAsync(page);
                 }
                 else
                 {
-                    _context.Pages.Update(input);
+                    var page = await _context.Pages.SingleOrDefaultAsync(p => p.Id == input.Id);
+                    if (page == null)
+                    {
+                        result.Message = Messages.Failed;
+                        return result;
+                    }
+
+                    page.Name = input.Name;
+                    page.NameEn = input.NameEn;
+                    page.Link = input.Link;
+                    page.Icon = input.Icon;
+                    page.InMenu = input.InMenu;
+                    page.IsActive = input.IsActive;
+                    page.IsAjax = input.IsAjax;
+                    page.ParentId = input.ParentId;
+                    page.ModuleId = input.ModuleId;
+                    page.CategoryId = input.CategoryId;
+
+                    _context.Pages.Update(page);
                 }
 
                 await _context.SaveChangesAsync();
@@ -79,7 +113,7 @@ namespace Acadimia.Infrastructure.Services.Pages
                 result.Success = true;
                 result.Message = Messages.Success;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 result.Message = Messages.Failed;
             }

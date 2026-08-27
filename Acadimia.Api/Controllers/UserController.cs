@@ -35,25 +35,30 @@ namespace Acadimia.Api.Controllers
             _fileService = fileService;
         }
 
-        [HttpPost] // display User DateTable
-        public async Task<IActionResult> GetAll()
+        [HttpPost] // display User DataTable
+        public async Task<IActionResult> GetAll([FromBody] UserDataTableRequestDto? request = null)
         {
-            var inputSearch = Request.Form["search[value]"];
-            var obj = !string.IsNullOrEmpty(inputSearch)
-                ? JsonConvert.DeserializeObject<User>(inputSearch) : new User();
+            request ??= new UserDataTableRequestDto();
+
+            var filter = new User
+            {
+                Keyword = request.SearchValue,
+                UserTypeId = request.UserTypeId ?? 0,
+                GenderId = request.GenderId,
+                IsActiveSearch = request.IsActiveSearch
+            };
 
             var result = await _usersService.GetAllAsync(new PagedResultRequestDto<User>
             {
-                SearchValue = obj,
-                SortColumn = Request.Form[string.Concat("columns[", Request.Form["order[0][column]"], "][name]")],
-                SortColumnDirection = Request.Form["order[0][dir]"],
-                PageSize = int.Parse(Request.Form["length"]),
-                Skip = int.Parse(Request.Form["start"])
+                SearchValue = filter,
+                SortColumn = request.SortColumn,
+                SortColumnDirection = request.SortColumnDirection,
+                PageSize = request.PageSize,
+                Skip = request.Skip
             });
 
             return Ok(new { recordsFiltered = result.TotalCount, result.TotalCount, result.Data });
         }
-
 
 
         [HttpGet] // returns data for create/edit User form
