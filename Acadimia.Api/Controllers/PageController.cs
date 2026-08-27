@@ -1,11 +1,10 @@
 ﻿using Acadimia.Data.Models;
 using Acadimia.Data.Resources;
+using Acadimia.Infrastructure.Dtos;
+using Acadimia.Infrastructure.Dtos.Pages;
 using Acadimia.Infrastructure.Services;
 using Acadimia.Infrastructure.Services.Pages;
-//using Acadimia.Web.ViewModel.Pages;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Newtonsoft.Json;
 
 namespace Acadimia.Api.Controllers
 {
@@ -17,78 +16,72 @@ namespace Acadimia.Api.Controllers
             _pagesService = pagesService;
         }
 
-        [HttpPost] // Display Pages DataTable
-        public async Task<IActionResult> GetAll()
+        [HttpPost]
+        public async Task<IActionResult> GetAll([FromBody] DataTableRequestDto? request = null)
         {
-            var inputSearch = Request.Form["search[value]"];
-            var obj = !string.IsNullOrEmpty(inputSearch)
-                ? JsonConvert.DeserializeObject<Page>(inputSearch) : new Page();
+            request ??= new DataTableRequestDto();
+
+            var filter = new Page { Keyword = request.SearchValue };
 
             var result = await _pagesService.GetAllAsync(new PagedResultRequestDto<Page>
             {
-                SearchValue = obj,
-                SortColumn = Request.Form[string.Concat("columns[", Request.Form["order[0][column]"], "][name]")],
-                SortColumnDirection = Request.Form["order[0][dir]"],
-                PageSize = int.Parse(Request.Form["length"]),
-                Skip = int.Parse(Request.Form["start"])
+                SearchValue = filter,
+                SortColumn = request.SortColumn,
+                SortColumnDirection = request.SortColumnDirection,
+                PageSize = request.PageSize,
+                Skip = request.Skip
             });
 
-            return Ok(new { recordsFiltered = result.TotalCount, result.TotalCount, result.Data });
+            return Ok(new
+            {
+                recordsFiltered = result.TotalCount,
+                recordsTotal = result.TotalCount,
+                data = result.Data
+            });
         }
 
-        //[HttpGet]  Display Pages page
-        //public async Task<IActionResult> Index()
-        //{
-        //    List<Page> parents = await _pagesService.GetParentsListAsync();
-        //    var parentsItem = parents.Select(p => new SelectListItem
-        //    {
-        //        Value = p.Id.ToString(),
-        //        Text = p.Name
-        //    }).ToList();
+        [HttpGet] // Display Create Edit Page data
+        public async Task<IActionResult> CreateEditModal(int id)
+        {
+            List<Page> parents = await _pagesService.GetParentsListAsync();
 
-        //    return View(new IndexPageVM
-        //    {
-        //        Parents = parentsItem,
-        //        Modules = await _pagesService.GetModulesListAsync()
-        //    });
-        //}
-
-        //[HttpGet] // Display Create Edit Page interface
-        //public async Task<IActionResult> CreateEditModal(int id)
-        //{
-        //    List<Page> parents = await _pagesService.GetParentsListAsync();
-        //    var parentsItem = parents.Select(p => new SelectListItem
-        //    {
-        //        Value = p.Id.ToString(),
-        //        Text = p.Name
-        //    }).ToList();
-
-        //    var pageVM = new CreateEditPageVM
-        //    {
-        //        Page = await _pagesService.GetByIdOrDefaultAsync(id),
-        //        Modules = await _pagesService.GetModulesListAsync(),
-        //        Parents = parentsItem,
-        //        Categories = await _pagesService.GetCategoriesListAsync()
-
-        //    };
-
-        //    return PartialView("_CreateEditModal", pageVM);
-        //}
+            return Ok(new
+            {
+                Page = await _pagesService.GetByIdOrDefaultAsync(id),
+                Modules = await _pagesService.GetModulesListAsync(),
+                Categories = await _pagesService.GetCategoriesListAsync(),
+                Parents = parents.Select(p => new { p.Id, p.Name })
+            });
+        }
 
         [HttpPost] // Create Edit Page
-        public async Task<OperationResult> CreateEdit(Page input)
+        public async Task<OperationResult> CreateEdit(PageInputDto input)
         {
             var result = new OperationResult(false, Messages.Invalid);
             if (!ModelState.IsValid)
             {
-                var message = string.Join("<br>  ", ModelState.Values
+                result.Message = string.Join("<br>  ", ModelState.Values
                     .SelectMany(v => v.Errors)
                     .Select(e => e.ErrorMessage));
-                result.Message = message;
                 return result;
             }
 
-            return await _pagesService.CreateEditAsync(input);
+            var entity = new Page
+            {
+                Id = input.Id,
+                Name = input.Name,
+                NameEn = input.NameEn,
+                Link = input.Link,
+                Icon = input.Icon,
+                InMenu = input.InMenu,
+                ParentId = input.ParentId,
+                IsActive = input.IsActive,
+                IsAjax = input.IsAjax,
+                ModuleId = input.ModuleId,
+                CategoryId = input.CategoryId
+            };
+
+            return await _pagesService.CreateEditAsync(entity);
         }
 
         [HttpDelete] // Delete Page

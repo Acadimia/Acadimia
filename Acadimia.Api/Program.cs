@@ -50,7 +50,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("FrontendPolicy", policy =>
     {
         policy.WithOrigins(
-                "https://your-frontend-domain.com",   // production frontend
+                "https://pixely-frame-magic.lovable.app/",   // production frontend
                 "http://localhost:3000"                // local dev (React/Vue/Angular default)
               )
               .AllowAnyHeader()

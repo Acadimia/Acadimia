@@ -56,10 +56,10 @@ namespace Acadimia.Api.Controllers
 
 
 
-        [HttpGet] // display create Edit User page
+        [HttpGet] // returns data for create/edit User form
         public async Task<IActionResult> CreateEditModal(string id)
         {
-            return PartialView("_CreateEditModal", new CreateEditUser
+            return Ok(new CreateEditUser
             {
                 User = await _usersService.GetByIdOrDefaultAsync(id),
                 UserTypes = await _usersService.GetUserTypesListAsync(),
@@ -113,13 +113,13 @@ namespace Acadimia.Api.Controllers
             return await _usersService.DeleteAsync(id);
         }
 
-        [HttpGet]  // display my profile User page
+        [HttpGet]  // returns current user's profile data
         public async Task<IActionResult> MyProfileModal()
         {
             var loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var myProfileDto = await _usersService.GetMyProfileAsync(loggedInUserId);
 
-            return PartialView("_MayProfileModal", new MyProfile()
+            return Ok(new MyProfile()
             {
                 MyProfileDto = myProfileDto,
                 Genders = await _usersService.GetGendersAsync()
@@ -151,10 +151,10 @@ namespace Acadimia.Api.Controllers
             return resultEditMyProfile;
         }
 
-        [HttpGet] // display Change Password page
-        public async Task<IActionResult> ChangePasswordModal()
+        [HttpGet] 
+        public IActionResult ChangePasswordModal()
         {
-            return PartialView("_ChangePasswordModal", new ChangePasswordDto()); ;
+            return Ok(new ChangePasswordDto());
         }
 
         [HttpPost] // Change Password
