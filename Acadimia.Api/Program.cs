@@ -50,8 +50,9 @@ builder.Services.AddCors(options =>
     options.AddPolicy("FrontendPolicy", policy =>
     {
         policy.WithOrigins(
-                "https://pixely-frame-magic.lovable.app/",   // production frontend
-                "http://localhost:3000"                // local dev (React/Vue/Angular default)
+                "https://pixely-frame-magic.vercel.app",     // production frontend (Vercel) — no trailing slash
+                "https://academia-platform.netlify.app",     // production frontend (Netlify) — no trailing slash
+                "http://localhost:3000"                      // local dev (React/Vue/Angular default)
               )
               .AllowAnyHeader()
               .AllowAnyMethod()
@@ -65,6 +66,12 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = new PathString("/Auth/login");
     options.LogoutPath = new PathString("/Auth/logout");
     // options.AccessDeniedPath = new PathString("/Auth/Accessdenied");
+
+    // مطلوب لأن الفرونت اند (Vercel/Netlify) والباك اند (هذا السيرفر) على
+    // دومينين مختلفين تمامًا — بدون هذا الإعداد، متصفحات Chrome/Edge/Firefox
+    // الحديثة برفضوا يخزّنوا أو يرسلوا كوكي الجلسة على طلبات cross-origin.
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // SameSite=None يتطلب HTTPS إجباريًا
 });
 
 // AutoMapper 
@@ -113,6 +120,6 @@ app.UseSwaggerUI(c =>
 });
 
 app.MapStaticAssets();
-app.MapControllers();  
+app.MapControllers();
 
 app.Run();
