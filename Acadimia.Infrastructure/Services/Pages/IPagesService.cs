@@ -1,10 +1,5 @@
 ﻿using Acadimia.Data.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Acadimia.Infrastructure.Dtos.Pages;
 
 namespace Acadimia.Infrastructure.Services.Pages
 {
@@ -13,7 +8,7 @@ namespace Acadimia.Infrastructure.Services.Pages
         Task<PagedResultDto<List<Page>>> GetAllAsync(PagedResultRequestDto<Page> input);
         Task<List<Page>> GetPagesListForMenu();
         Task<Page> GetByIdOrDefaultAsync(int id);
-        Task<OperationResult> CreateEditAsync(Page input);
+        Task<OperationResult> CreateEditAsync(PageInputDto input);
         Task<OperationResult> DeleteAsync(int id);
         Task<List<Page>> GetParentsListAsync();
         Task<List<Module>> GetModulesListAsync();

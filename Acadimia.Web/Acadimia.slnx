@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="../Acadimia.Api/Acadimia.Api.csproj" />
+  <Project Path="../Acadimia.Data/Acadimia.Data.csproj" />
+  <Project Path="../Acadimia.Infrastructure/Acadimia.Infrastructure.csproj" />
+  <Project Path="Acadimia.Web.csproj" />
+</Solution>

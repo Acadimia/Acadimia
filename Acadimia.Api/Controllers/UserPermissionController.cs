@@ -12,32 +12,24 @@ namespace Acadimia.Api.Controllers
     {
         private readonly IUserPermissionsService _userPermissionsService;
 
-		public UserPermissionController(IUserPermissionsService userPermissionsService)
+        public UserPermissionController(IUserPermissionsService userPermissionsService)
         {
             _userPermissionsService = userPermissionsService;
         }
-
-        // display User Permission Page
-   //     public async Task<IActionResult> Index()
-   //     {
-   //         var userPermissionsDto = await _userPermissionsService.GetUserPermissionsAsync();
-			//return View(userPermissionsDto);
-   //     }
 
         // display User Type Permissions
         [HttpPost]
         public async Task<IActionResult> GetUserTypePermissions(int userTypeId)
         {
             var permissions = await _userPermissionsService.GetUserTypePermissionsAsync(userTypeId);
-			return Json(permissions);
+            return Ok(permissions);   // <-- fixed
         }
 
         // Save User Type Permissions
         [HttpPost]
-		public async Task<OperationResult> SavePermissions(int userTypeId, List<UserPermission> permissions)
+        public async Task<OperationResult> SavePermissions(int userTypeId, List<UserPermission> permissions)
         {
-			return await _userPermissionsService.SavePermissionsAsync(userTypeId, permissions);
-		}
-
+            return await _userPermissionsService.SavePermissionsAsync(userTypeId, permissions);
+        }
     }
 }

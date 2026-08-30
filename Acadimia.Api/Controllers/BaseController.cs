@@ -6,16 +6,13 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Acadimia.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]/[action]")]
-    public class BaseController : Controller
+    public class BaseController : ControllerBase
     {
-        //public override async void OnActionExecuting(ActionExecutingContext context)
-        //{
-        //    base.OnActionExecuting(context);
-        //}
     }
 }
