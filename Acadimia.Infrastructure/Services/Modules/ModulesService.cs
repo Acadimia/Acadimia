@@ -8,15 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Acadimia.Data.Resources;
 using Acadimia.Data.DbContext;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using Acadimia.Data.Models;
 
 namespace Acadimia.Infrastructure.Services.Modules
 {
-    public class ModulesService : IModulesService
+    public class ModulesService : BaseService, IModulesService
     {
-        private readonly ApplicationDbContext _context;
-        public ModulesService(ApplicationDbContext context) 
+        public ModulesService(ApplicationDbContext context, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
+            : base(context, userManager, httpContextAccessor)
         {
-            _context = context; 
         }
 
         public async Task<List<Module>> GetAllAsync()
@@ -31,8 +33,12 @@ namespace Acadimia.Infrastructure.Services.Modules
             var module = _context.Modules.SingleOrDefault(m => m.Id == input.Id);
             if (module != null)
             {
+                var currentUserId = await GetCurrentUserIdAsync();
+
                 module.Status = input.Status;
+                SetUpdatedFields(module, currentUserId);
                 _context.Modules.Update(module);
+                SetEntityModifiedFields(module);
                 await _context.SaveChangesAsync();
                 result.Success = true;
                 if (module.Status)

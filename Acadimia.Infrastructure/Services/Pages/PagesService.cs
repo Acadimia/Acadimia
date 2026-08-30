@@ -65,13 +65,18 @@ namespace Acadimia.Infrastructure.Services.Pages
             var result = new OperationResult();
             try
             {
+                var currentUserId = await GetCurrentUserIdAsync();
+
                 if (input.Id == 0)
                 {
+                    SetCreatedFields(input, currentUserId);
                     await _context.Pages.AddAsync(input);
                 }
                 else
                 {
+                    SetUpdatedFields(input, currentUserId);
                     _context.Pages.Update(input);
+                    SetEntityModifiedFields(input);
                 }
 
                 await _context.SaveChangesAsync();
@@ -97,8 +102,10 @@ namespace Acadimia.Infrastructure.Services.Pages
                     result.Message = Messages.PageHasChildren;
                     return result;
                 }
+                var currentUserId = await GetCurrentUserIdAsync();
 
                 page.IsDeleted = true;
+                page.DeletedBy = currentUserId;
                 _context.Pages.Update(page);
                 await _context.SaveChangesAsync();
                 result.Success = true;

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Acadimia.Data.Models
 {
-    public class Page
+    public class Page : BaseModel
     {
         [Display(Name = "Id", ResourceType = typeof(Messages))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Messages))]
@@ -35,7 +35,7 @@ namespace Acadimia.Data.Models
         public bool IsActive { get; set; }
         public bool IsAjax { get; set; }
 
-        public bool IsDeleted { get; set; } = false;
+        // IsDeleted, CreatedOn, CreatedBy, UpdatedOn, UpdatedBy, Keyword and IsActiveSearch are inherited from BaseModel
 
         public int? ModuleId { get; set; }
         public Module? Module { get; set; }
@@ -46,10 +46,7 @@ namespace Acadimia.Data.Models
         public PageCategory? Category { get; set; }
         
         
-        [NotMapped] // for search operations
-        public string? Keyword { get; set; }
-        [NotMapped] // For Search by Status.
-        public bool? IsActiveSearch { get; set; }
+        // search helpers are inherited from BaseModel
 
 
     }

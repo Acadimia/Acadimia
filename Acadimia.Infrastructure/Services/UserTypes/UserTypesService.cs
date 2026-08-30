@@ -71,18 +71,10 @@ namespace Acadimia.Infrastructure.Services.UserTypes
             }
             catch (Exception ex)
             {
-                var message = ex.InnerException.Message;
-                var execptionType = message.Split("_")[message.Split("_").Length - 1].Split("'")[0];
-               
-                switch (execptionType.ToLower())
+                result.Message = GetUniqueConstraintMessage(ex, new System.Collections.Generic.Dictionary<string, string>
                 {
-                    case "uniquename":
-                        result.Message = Messages.UniqueName;
-                        break;
-                    default:
-                        result.Message = Messages.Failed;
-                        break;
-                }
+                    { "uniquename", Messages.UniqueName }
+                });
             }
             return result;
         }

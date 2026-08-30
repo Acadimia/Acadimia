@@ -8,16 +8,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Dynamic.Core;
 using Acadimia.Data.DbContext;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using Acadimia.Data.Models;
 
 namespace Acadimia.Infrastructure.Services.Constants
 {
-    public class ConstantsService : IConstantsService
+	public class ConstantsService : BaseService, IConstantsService
 	{
-		private readonly ApplicationDbContext _context;
-
-		public ConstantsService(ApplicationDbContext context)
+		public ConstantsService(ApplicationDbContext context, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
+			: base(context, userManager, httpContextAccessor)
 		{
-			_context = context;
 		}
 
 		public async Task<PagedResultDto<List<Constant>>> GetAllAsync(PagedResultRequestDto<Constant> input)
@@ -61,12 +62,16 @@ namespace Acadimia.Infrastructure.Services.Constants
 			var result = new OperationResult();
 			try
 			{
+				var currentUserId = await GetCurrentUserIdAsync();
 				if (input.Id == 0)
 				{
+					SetCreatedFields(input, currentUserId);
 					await _context.Constants.AddAsync(input);
 				}
 				else
 				{
+					SetUpdatedFields(input, currentUserId);
+					SetEntityModifiedFields(input);
 					_context.Constants.Update(input);
 				}
 

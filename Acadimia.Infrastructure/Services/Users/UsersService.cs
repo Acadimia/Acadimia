@@ -160,7 +160,11 @@ namespace Acadimia.Infrastructure.Services.Users
             }
             catch (Exception ex)
             {
-                result.Message = GetErrorMessage(ex);
+                result.Message = GetUniqueConstraintMessage(ex, new System.Collections.Generic.Dictionary<string, string>
+                {
+                    { "uniqueemail", Acadimia.Data.Resources.Messages.UniqueEmail },
+                    { "uniquephoneno", Acadimia.Data.Resources.Messages.UniquePhoneNo }
+                });
             }
 
             return result;
@@ -251,10 +255,14 @@ namespace Acadimia.Infrastructure.Services.Users
                         result.NewAvatar = user.Avatar;
                 }
             }
-			catch (Exception ex)
-			{
-				result.Message = GetErrorMessage(ex);
-			}
+            catch (Exception ex)
+            {
+                result.Message = GetUniqueConstraintMessage(ex, new System.Collections.Generic.Dictionary<string, string>
+                {
+                    { "uniqueemail", Acadimia.Data.Resources.Messages.UniqueEmail },
+                    { "uniquephoneno", Acadimia.Data.Resources.Messages.UniquePhoneNo }
+                });
+            }
 
 			return result;
 		}
@@ -313,21 +321,7 @@ namespace Acadimia.Infrastructure.Services.Users
             return result;
         }
 
-        private string GetErrorMessage(Exception ex)
-        {
-            var message = ex.InnerException.Message;
-            var execptionType = message.Split("_")[message.Split("_").Length - 1].Split("'")[0];
 
-            switch (execptionType.ToLower())
-            {
-                case "uniqueemail":
-                    return Messages.UniqueEmail;
-                case "uniquephoneno":
-                    return Messages.UniquePhoneNo;
-                default:
-                    return Messages.Failed;
-            }
-        }
 
 	}
 }

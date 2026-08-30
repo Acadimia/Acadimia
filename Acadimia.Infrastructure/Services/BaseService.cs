@@ -35,22 +35,58 @@ namespace Acadimia.Infrastructure.Services
             return user?.Name;
         }
 
-        protected void SetCreatedFields(BaseModel entity, string userId)
+		protected void SetCreatedFields(object entity, string userId)
 		{
-			entity.CreatedBy = userId;
-			entity.CreatedOn = DateTime.Now;
+			if (entity is BaseModel bm)
+			{
+				bm.CreatedBy = userId;
+				bm.CreatedOn = DateTime.Now;
+			}
 		}
 
-		protected void SetUpdatedFields(BaseModel entity, string userId)
+		protected void SetUpdatedFields(object entity, string userId)
 		{
-			entity.UpdatedBy = userId;
-			entity.UpdatedOn = DateTime.Now;
+			if (entity is BaseModel bm)
+			{
+				bm.UpdatedBy = userId;
+				bm.UpdatedOn = DateTime.Now;
+			}
 		}
 
-        protected void SetEntityModifiedFields(BaseModel entity)
-        {
-            _context.Entry(entity).Property(x => x.CreatedOn).IsModified = false;
-            _context.Entry(entity).Property(x => x.CreatedBy).IsModified = false;
-        }
+		protected void SetEntityModifiedFields(object entity)
+		{
+			if (entity is BaseModel bm)
+			{
+				_context.Entry(bm).Property(x => x.CreatedOn).IsModified = false;
+				_context.Entry(bm).Property(x => x.CreatedBy).IsModified = false;
+			}
+		}
+
+		/// <summary>
+		/// Parses database unique-constraint exception inner message and maps it to a friendly message
+		/// mapping is a dictionary where key is the constraint token (e.g. "uniqueemail") and value is the friendly message.
+		/// </summary>
+		protected string GetUniqueConstraintMessage(Exception ex, System.Collections.Generic.Dictionary<string, string> mapping)
+		{
+			if (ex?.InnerException?.Message == null)
+				return Acadimia.Data.Resources.Messages.Failed;
+
+			var message = ex.InnerException.Message;
+			string execptionType;
+			try
+			{
+				var parts = message.Split("_");
+				execptionType = parts[parts.Length - 1].Split('\'')[0].ToLower();
+			}
+			catch
+			{
+				return Acadimia.Data.Resources.Messages.Failed;
+			}
+
+			if (mapping != null && mapping.TryGetValue(execptionType, out var mapped))
+				return mapped;
+
+			return Acadimia.Data.Resources.Messages.Failed;
+		}
     }
 }
