@@ -59,7 +59,22 @@ namespace Acadimia.Data.DbContext
                       .HasForeignKey(t => t.UserId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
+            builder.Entity<ParentStudentLink>().HasQueryFilter(x => !x.IsDeleted);
 
+            builder.Entity<ParentStudentLink>(entity =>
+            {
+                entity.HasOne(l => l.ParentUser)
+                      .WithMany()
+                      .HasForeignKey(l => l.ParentUserId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(l => l.Student)
+                      .WithMany()
+                      .HasForeignKey(l => l.StudentId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasIndex(l => new { l.ParentUserId, l.StudentId }).IsUnique();
+            });
             // =====================================================================
             // NEW - Wallet / Enrollment / Academic-tracking modules (added, nothing
             // above this line was changed). Every new FK is Restrict: the app deletes
@@ -328,6 +343,7 @@ namespace Acadimia.Data.DbContext
         public DbSet<WithdrawalRequest> WithdrawalRequests { get; set; }
         public DbSet<PlatformCommissionSetting> PlatformCommissionSettings { get; set; }
         public DbSet<PlatformRevenueLedger> PlatformRevenueLedgers { get; set; }
+        public DbSet<ParentStudentLink> ParentStudentLinks { get; set; }
 
         // ========== NEW - Enrollment, Courses & Content module ==========
         public DbSet<Subject> Subjects { get; set; }

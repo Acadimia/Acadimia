@@ -9,6 +9,7 @@ namespace Acadimia.Core.Enums
     public enum GeneralEnums
     {
         Gender = 1,
+        Kinship = 20,
 
         Male = 2,   // Gender
         Female = 3,
@@ -29,5 +30,8 @@ namespace Acadimia.Core.Enums
         SystemModulesId = 9,
         PageId = 10,
         ConstantId = 11,
+
+
+        
     }
 }

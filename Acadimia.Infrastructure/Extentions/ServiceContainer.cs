@@ -1,6 +1,7 @@
 ﻿using Acadimia.Infrastructure.Services.Constants;
 using Acadimia.Infrastructure.Services.Modules;
 using Acadimia.Infrastructure.Services.Pages;
+using Acadimia.Infrastructure.Services.Parent;
 using Acadimia.Infrastructure.Services.UserPermissions;
 using Acadimia.Infrastructure.Services.Users;
 using Acadimia.Infrastructure.Services.UserTypes;
@@ -19,15 +20,15 @@ namespace Acadimia.Infrastructure.Extentions
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
 
-            //services.AddTransient<IClaimsService, ClaimsService>();
-            //services.AddTransient<IClaimsService, ClaimsService>();
+
             services.AddTransient<IPagesService, PagesService>();
             services.AddTransient<IUserTypesService, UserTypesService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IModulesService, ModulesService>();
             services.AddTransient<IUserPermissionsService, UserPermissionsService>();
             services.AddTransient<IConstantsService, ConstantsService>();
-            services.AddTransient<IWalletService, WalletService>(); 
+            services.AddTransient<IWalletService, WalletService>();
+            services.AddTransient<IParentService, ParentService>();
             //services.AddTransient<,>();
             //services.AddTransient<,>();
             //services.AddTransient<,>();

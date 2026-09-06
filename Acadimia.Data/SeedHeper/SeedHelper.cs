@@ -68,14 +68,14 @@ namespace Acadimia.Data.SeedHeper
                 new Constant { Id = 15, Name = "شهادة ثانوية عامة", ParentId = 12 },
                 new Constant { Id = 16, Name = "شهادة دبلوم", ParentId = 12 },
                 new Constant { Id = 17, Name = "شهادة بكالوريس", ParentId = 12 },
-                new Constant { Id = 18, Name = "شهادة ماجستير", ParentId = 12 }
+                new Constant { Id = 18, Name = "شهادة ماجستير", ParentId = 12 },
 
                 //new Constant { Id = 20, Name = "نوع المستفيد" }, // BeneficiaryType
                 //new Constant { Id = 21, Name = "طال", ParentId = 20 },
                 //new Constant { Id = 22, Name = "مورد", ParentId = 20 },
                 //new Constant { Id = 23, Name = "مزود خدمة", ParentId = 20 },
 
-                
+
                 //new Constant { Id = 27, Name = "نوع العنوان" }, // AddressType
                 //new Constant { Id = 28, Name = "عنوان السكن", ParentId = 27 },
                 //new Constant { Id = 29, Name = "عنوان العمل", ParentId = 27 },
@@ -97,61 +97,61 @@ namespace Acadimia.Data.SeedHeper
                 //new Constant { Id = 42, Name = "الإسلام", ParentId = 41 },
                 //new Constant { Id = 43, Name = "المسيحية", ParentId = 41 },
 
-                //new Constant { Id = 44, Name = "صلة القرابة" }, // Kinship
-                //new Constant { Id = 45, Name = "اب", ParentId = 44 },
-                //new Constant { Id = 46, Name = "ام", ParentId = 44 },
-                //new Constant { Id = 47, Name = "ابن", ParentId = 44 },
-                //new Constant { Id = 48, Name = "بنت", ParentId = 44 },
-                //new Constant { Id = 49, Name = "زوج", ParentId = 44 },
-                //new Constant { Id = 50, Name = "زوجة", ParentId = 44 },
+                new Constant { Id = 20, Name = "صلة القرابة" }, // Kinship
+                new Constant { Id = 21, Name = "اب", ParentId = 20 },
+                new Constant { Id = 22, Name = "ام", ParentId = 20 },
+                new Constant { Id = 23, Name = "ابن", ParentId = 20 },
+                new Constant { Id = 24, Name = "بنت", ParentId = 20 },
+                new Constant { Id = 25, Name = "زوج", ParentId = 20 },
+                new Constant { Id = 26, Name = "زوجة", ParentId = 20 },
+                new Constant { Id = 27, Name = "وصي", ParentId = 20 }
+            //new Constant { Id = 51, Name = "تصنيف المستفيد" }, // BeneficiaryCategory
+            //new Constant { Id = 52, Name = "موثوق", ParentId = 51 },
+            //new Constant { Id = 53, Name = "غير موثوق", ParentId = 51 },
+            //new Constant { Id = 54, Name = "غير مصنف", ParentId = 51 },
 
-                //new Constant { Id = 51, Name = "تصنيف المستفيد" }, // BeneficiaryCategory
-                //new Constant { Id = 52, Name = "موثوق", ParentId = 51 },
-                //new Constant { Id = 53, Name = "غير موثوق", ParentId = 51 },
-                //new Constant { Id = 54, Name = "غير مصنف", ParentId = 51 },
+            //new Constant { Id = 55, Name = "مجموعات الخدمات" }, // Service Group
+            //new Constant { Id = 56, Name = "خدمات جوازات السفر", ParentId = 55 },
+            //new Constant { Id = 57, Name = "خدمات الهويات", ParentId = 55 },
+            //new Constant { Id = 58, Name = "خدمات العقود", ParentId = 55 },
+            //new Constant { Id = 59, Name = "خدمات التوثيقات", ParentId = 55 },
 
-                //new Constant { Id = 55, Name = "مجموعات الخدمات" }, // Service Group
-                //new Constant { Id = 56, Name = "خدمات جوازات السفر", ParentId = 55 },
-                //new Constant { Id = 57, Name = "خدمات الهويات", ParentId = 55 },
-                //new Constant { Id = 58, Name = "خدمات العقود", ParentId = 55 },
-                //new Constant { Id = 59, Name = "خدمات التوثيقات", ParentId = 55 },
+            //new Constant { Id = 60, Name = "الأولوية", }, // Priority
+            //new Constant { Id = 61, Name = "إجباري", ParentId = 60 },
+            //new Constant { Id = 62, Name = "إختياري", ParentId = 60 },
 
-                //new Constant { Id = 60, Name = "الأولوية", }, // Priority
-                //new Constant { Id = 61, Name = "إجباري", ParentId = 60 },
-                //new Constant { Id = 62, Name = "إختياري", ParentId = 60 },
+            //new Constant { Id = 63, Name = "نوع الحسابات" }, // Accounts Types
+            //new Constant { Id = 64, Name = "مصروفات", ParentId = 63 }, // Expense Accounts
+            //new Constant { Id = 65, Name = "مصروفات", ParentId = 63 }, // Revenue Accounts
+            //new Constant { Id = 66, Name = "ذمم مدينة", ParentId = 63 },
+            //new Constant { Id = 67, Name = "ذمم دائنة", ParentId = 63 },
+            //new Constant { Id = 68, Name = "صناديق", ParentId = 63 }, // Box Accounts
+            //new Constant { Id = 69, Name = "بنوك", ParentId = 63 }, // Bank Accounts
+            //new Constant { Id = 70, Name = "مشتريات", ParentId = 63 },
+            //new Constant { Id = 71, Name = "مبيعات", ParentId = 63 },
 
-                //new Constant { Id = 63, Name = "نوع الحسابات" }, // Accounts Types
-                //new Constant { Id = 64, Name = "مصروفات", ParentId = 63 }, // Expense Accounts
-                //new Constant { Id = 65, Name = "مصروفات", ParentId = 63 }, // Revenue Accounts
-                //new Constant { Id = 66, Name = "ذمم مدينة", ParentId = 63 },
-                //new Constant { Id = 67, Name = "ذمم دائنة", ParentId = 63 },
-                //new Constant { Id = 68, Name = "صناديق", ParentId = 63 }, // Box Accounts
-                //new Constant { Id = 69, Name = "بنوك", ParentId = 63 }, // Bank Accounts
-                //new Constant { Id = 70, Name = "مشتريات", ParentId = 63 },
-                //new Constant { Id = 71, Name = "مبيعات", ParentId = 63 },
+            //new Constant { Id = 72, Name = " انواع الجهات" }, // Agency Types
+            //new Constant { Id = 73, Name = "جهات حكومية", ParentId = 72 },
+            //new Constant { Id = 74, Name = "جهات خدماتية", ParentId = 72 },
+            //new Constant { Id = 75, Name = "مندوب شركات", ParentId = 72 },
+            //new Constant { Id = 76, Name = "شركات خاصة", ParentId = 72 },
 
-                //new Constant { Id = 72, Name = " انواع الجهات" }, // Agency Types
-                //new Constant { Id = 73, Name = "جهات حكومية", ParentId = 72 },
-                //new Constant { Id = 74, Name = "جهات خدماتية", ParentId = 72 },
-                //new Constant { Id = 75, Name = "مندوب شركات", ParentId = 72 },
-                //new Constant { Id = 76, Name = "شركات خاصة", ParentId = 72 },
+            //new Constant { Id = 77, Name = " حالات الطلب" }, // Request Cases
+            //new Constant { Id = 78, Name = "جديد", ParentId = 77 },
+            //new Constant { Id = 79, Name = "قيدالتنفيذ", ParentId = 77 },
+            //new Constant { Id = 80, Name = "جاري الإرسال", ParentId = 77 },
+            //new Constant { Id = 81, Name = "جاري الإستلام", ParentId = 77 },
+            //new Constant { Id = 82, Name = "الإستلام من المكتب", ParentId = 77 },
+            //new Constant { Id = 83, Name = "توصيل مع الديلفري", ParentId = 77 },
+            //new Constant { Id = 84, Name = "تم الإستلام", ParentId = 77 },
+            //new Constant { Id = 85, Name = "معلق", ParentId = 77 },
+            //new Constant { Id = 86, Name = "ملغي", ParentId = 77 },
 
-                //new Constant { Id = 77, Name = " حالات الطلب" }, // Request Cases
-                //new Constant { Id = 78, Name = "جديد", ParentId = 77 },
-                //new Constant { Id = 79, Name = "قيدالتنفيذ", ParentId = 77 },
-                //new Constant { Id = 80, Name = "جاري الإرسال", ParentId = 77 },
-                //new Constant { Id = 81, Name = "جاري الإستلام", ParentId = 77 },
-                //new Constant { Id = 82, Name = "الإستلام من المكتب", ParentId = 77 },
-                //new Constant { Id = 83, Name = "توصيل مع الديلفري", ParentId = 77 },
-                //new Constant { Id = 84, Name = "تم الإستلام", ParentId = 77 },
-                //new Constant { Id = 85, Name = "معلق", ParentId = 77 },
-                //new Constant { Id = 86, Name = "ملغي", ParentId = 77 },
-
-                //new Constant { Id = 87, Name = "حالة الفاتورة" }, // Invoice Status
-                //new Constant { Id = 88, Name = "جديد", ParentId = 87 },
-                //new Constant { Id = 89, Name = "مرحل", ParentId = 87 },
-                //new Constant { Id = 90, Name = "معدل", ParentId = 87 },
-                //new Constant { Id = 91, Name = "لغي", ParentId = 87 }
+            //new Constant { Id = 87, Name = "حالة الفاتورة" }, // Invoice Status
+            //new Constant { Id = 88, Name = "جديد", ParentId = 87 },
+            //new Constant { Id = 89, Name = "مرحل", ParentId = 87 },
+            //new Constant { Id = 90, Name = "معدل", ParentId = 87 },
+            //new Constant { Id = 91, Name = "لغي", ParentId = 87 }
 
             );
         }
