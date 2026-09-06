@@ -4,6 +4,7 @@ using Acadimia.Infrastructure.Services.Pages;
 using Acadimia.Infrastructure.Services.UserPermissions;
 using Acadimia.Infrastructure.Services.Users;
 using Acadimia.Infrastructure.Services.UserTypes;
+using Acadimia.Infrastructure.Services.Wallets;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace Acadimia.Infrastructure.Extentions
             services.AddTransient<IModulesService, ModulesService>();
             services.AddTransient<IUserPermissionsService, UserPermissionsService>();
             services.AddTransient<IConstantsService, ConstantsService>();
+            services.AddTransient<IWalletService, WalletService>(); 
             //services.AddTransient<,>();
             //services.AddTransient<,>();
             //services.AddTransient<,>();

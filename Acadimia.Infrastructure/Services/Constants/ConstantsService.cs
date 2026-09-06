@@ -25,7 +25,7 @@ namespace Acadimia.Infrastructure.Services.Constants
 		{
 			IQueryable<Constant> constants = _context.Constants.Include(c => c.Parent)
 				.Where(x => string.IsNullOrEmpty(input.SearchValue.Keyword)
-				? true : (x.Name.Contains(input.SearchValue.Keyword)));
+		          ? true : (x.Name.Contains(input.SearchValue.Keyword)));
 
 			if (input.SearchValue.ParentId > 0)
 				constants = constants.Where(x => x.ParentId == input.SearchValue.ParentId);

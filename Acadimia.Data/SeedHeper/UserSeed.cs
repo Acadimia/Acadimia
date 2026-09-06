@@ -17,7 +17,13 @@ namespace Acadimia.Data.SeedHeper
             // seed User Type
             builder.Entity<UserType>().HasData(
                 new UserType { Id = 1, Name = "مدير النظام" },
-                new UserType { Id = 2, Name = "مستخدم" }
+                new UserType { Id = 2, Name = "مستخدم" },
+                new UserType { Id = 3, Name = "الطالب" },
+                new UserType { Id = 4, Name = "المعلم" },
+                new UserType { Id = 5, Name = "ولي الامر" }
+
+
+
             );
 
             var adminUserId = "D3E20CBB-2AD1-4D55-9A1E-4CEEC5B4CDE3";

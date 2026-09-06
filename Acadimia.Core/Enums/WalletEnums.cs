@@ -17,10 +17,6 @@ namespace Acadimia.Core.Enums
         InstructorCredit = 4
     }
 
-    // Lifecycle of a single WalletTransaction row. TopUp/Withdrawal start at Pending
-    // and move to Accepted/Rejected (and, for withdrawals, on to Completed) as
-    // Admin/Finance acts on them. EnrollmentDeduction/InstructorCredit are written
-    // directly as Completed. Reversed is an exception path for admin corrections.
     public enum WalletTransactionStatus
     {
         Pending = 1,

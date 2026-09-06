@@ -61,26 +61,13 @@ namespace Acadimia.Infrastructure.Services.Pages
             return new Page();
         }
 
-        // Acadimia.Infrastructure/Services/Pages/PagesService.cs — replace the existing CreateEditAsync
         public async Task<OperationResult> CreateEditAsync(PageInputDto input)
         {
             var result = new OperationResult();
             try
             {
-                var currentUserId = await GetCurrentUserIdAsync();
-
                 if (input.Id == 0)
                 {
-<<<<<<< HEAD
-                    SetCreatedFields(input, currentUserId);
-                    await _context.Pages.AddAsync(input);
-                }
-                else
-                {
-                    SetUpdatedFields(input, currentUserId);
-                    _context.Pages.Update(input);
-                    SetEntityModifiedFields(input);
-=======
                     var page = new Page
                     {
                         Name = input.Name,
@@ -118,7 +105,6 @@ namespace Acadimia.Infrastructure.Services.Pages
                     page.CategoryId = input.CategoryId;
 
                     _context.Pages.Update(page);
->>>>>>> ee0d1f2059fe9bba43af2f0f0e709f8ab4f54dae
                 }
 
                 await _context.SaveChangesAsync();
