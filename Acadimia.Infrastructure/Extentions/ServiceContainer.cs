@@ -1,7 +1,10 @@
 ﻿using Acadimia.Infrastructure.Services.Constants;
+using Acadimia.Infrastructure.Services.Courses;
+using Acadimia.Infrastructure.Services.Lessons;
 using Acadimia.Infrastructure.Services.Modules;
 using Acadimia.Infrastructure.Services.Pages;
 using Acadimia.Infrastructure.Services.Parent;
+using Acadimia.Infrastructure.Services.Teachers;
 using Acadimia.Infrastructure.Services.UserPermissions;
 using Acadimia.Infrastructure.Services.Users;
 using Acadimia.Infrastructure.Services.UserTypes;
@@ -29,6 +32,9 @@ namespace Acadimia.Infrastructure.Extentions
             services.AddTransient<IConstantsService, ConstantsService>();
             services.AddTransient<IWalletService, WalletService>();
             services.AddTransient<IParentService, ParentService>();
+            services.AddTransient<ITeacherService, TeacherService>();
+            services.AddTransient<ICourseService, CourseService>();
+            services.AddTransient<ILessonService, LessonService>();
             //services.AddTransient<,>();
             //services.AddTransient<,>();
             //services.AddTransient<,>();

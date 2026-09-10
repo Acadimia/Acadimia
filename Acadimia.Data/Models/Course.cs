@@ -3,8 +3,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Acadimia.Data.Models
 {
-    // A pre-recorded online course offered by an instructor, separate from a
-    // live in-person Group.
     public class Course : BaseModel
     {
         public int Id { get; set; }
@@ -25,5 +23,8 @@ namespace Acadimia.Data.Models
         public decimal Price { get; set; }
 
         public CourseStatus Status { get; set; }
+
+        public CourseDeliveryType DeliveryType { get; set; }
+        public int MaxStudents { get; set; }
     }
 }

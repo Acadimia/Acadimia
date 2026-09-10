@@ -316,6 +316,30 @@ namespace Acadimia.Data.DbContext
                       .HasForeignKey(l => l.UserId)
                       .OnDelete(DeleteBehavior.Restrict);
             });
+            builder.Entity<GroupScheduleDay>(entity =>
+            {
+                entity.HasOne(s => s.Group)
+                      .WithMany()
+                      .HasForeignKey(s => s.GroupId)
+                      .OnDelete(DeleteBehavior.Cascade); // sole parent — safe to cascade
+
+                entity.HasIndex(s => new { s.GroupId, s.DayOfWeek });
+            });
+
+            builder.Entity<Group>(entity =>
+            {
+                entity.HasOne(g => g.Course)
+                      .WithMany()
+                      .HasForeignKey(g => g.CourseId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            builder.Entity<Lesson>(entity =>
+            {
+                // conflict-detection queries hit (GroupId, ScheduledDate) and (Teacher via Group/Course, ScheduledDate)
+                entity.HasIndex(l => new { l.GroupId, l.ScheduledDate });
+                entity.HasIndex(l => new { l.CourseId, l.ScheduledDate });
+            });
         }
 
 
@@ -329,6 +353,8 @@ namespace Acadimia.Data.DbContext
         public DbSet<Student> Students { get; set; }
         public DbSet<Father> Fathers { get; set; }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<GroupScheduleDay> GroupScheduleDays { get; set; }
+
         public DbSet<Grade> Grades { get; set; }
         public DbSet<Nationality> Nationalities { get; set; }
         public DbSet<Teacher> Teachers { get; set; }

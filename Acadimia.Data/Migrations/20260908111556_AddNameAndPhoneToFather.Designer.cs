@@ -4,6 +4,7 @@ using Acadimia.Data.DbContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Acadimia.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260908111556_AddNameAndPhoneToFather")]
+    partial class AddNameAndPhoneToFather
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -335,17 +338,11 @@ namespace Acadimia.Data.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DeliveryType")
-                        .HasColumnType("int");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<int>("MaxStudents")
-                        .HasColumnType("int");
 
                     b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
@@ -602,23 +599,11 @@ namespace Acadimia.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("WhatsAppNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -672,23 +657,11 @@ namespace Acadimia.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("CourseEndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("CourseId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CourseStartDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("DefaultLessonDurationMinutes")
-                        .HasColumnType("int");
 
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
@@ -698,9 +671,6 @@ namespace Acadimia.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<int>("MaxStudents")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -717,37 +687,11 @@ namespace Acadimia.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
-
                     b.HasIndex("GradeId");
 
                     b.HasIndex("TeacherId");
 
                     b.ToTable("Groups");
-                });
-
-            modelBuilder.Entity("Acadimia.Data.Models.GroupScheduleDay", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("DayOfWeek")
-                        .HasColumnType("int");
-
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("time");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("GroupId", "DayOfWeek");
-
-                    b.ToTable("GroupScheduleDays");
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.JoinRequest", b =>
@@ -821,9 +765,6 @@ namespace Acadimia.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CancellationReason")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int?>("CourseId")
                         .HasColumnType("int");
 
@@ -836,34 +777,13 @@ namespace Acadimia.Data.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DurationMinutes")
-                        .HasColumnType("int");
-
                     b.Property<int?>("GroupId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("MeetingInstructions")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("MeetingPlatform")
-                        .HasColumnType("int");
-
-                    b.Property<string>("MeetingUrl")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("OrderIndex")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("ScheduledDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("time");
-
-                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -878,9 +798,9 @@ namespace Acadimia.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId", "ScheduledDate");
+                    b.HasIndex("CourseId");
 
-                    b.HasIndex("GroupId", "ScheduledDate");
+                    b.HasIndex("GroupId");
 
                     b.ToTable("Lessons");
                 });
@@ -2664,7 +2584,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 64, DateTimeKind.Local).AddTicks(1021),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 12, DateTimeKind.Local).AddTicks(5361),
                             InMenu = false,
                             IsActive = false,
                             IsAjax = false,
@@ -2676,7 +2596,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 2,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 66, DateTimeKind.Local).AddTicks(4216),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 14, DateTimeKind.Local).AddTicks(6605),
                             Icon = "bi bi-house-fill",
                             InMenu = true,
                             IsActive = true,
@@ -2691,7 +2611,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 3,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 66, DateTimeKind.Local).AddTicks(6231),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 14, DateTimeKind.Local).AddTicks(8582),
                             Icon = "bi bi-list-ul",
                             InMenu = true,
                             IsActive = true,
@@ -2706,7 +2626,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 4,
                             CategoryId = 1,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 66, DateTimeKind.Local).AddTicks(6247),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 14, DateTimeKind.Local).AddTicks(8595),
                             Icon = "bi bi-people",
                             InMenu = true,
                             IsActive = true,
@@ -2721,7 +2641,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 5,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 66, DateTimeKind.Local).AddTicks(6250),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 14, DateTimeKind.Local).AddTicks(8599),
                             Icon = "bi bi-person-fill",
                             InMenu = true,
                             IsActive = true,
@@ -2737,7 +2657,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 6,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 66, DateTimeKind.Local).AddTicks(6261),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 14, DateTimeKind.Local).AddTicks(8608),
                             Icon = "bi bi-people",
                             InMenu = true,
                             IsActive = true,
@@ -2753,7 +2673,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 7,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 66, DateTimeKind.Local).AddTicks(6264),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 14, DateTimeKind.Local).AddTicks(8611),
                             Icon = "bi bi-check-lg",
                             InMenu = true,
                             IsActive = true,
@@ -2769,7 +2689,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 8,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 66, DateTimeKind.Local).AddTicks(6267),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 14, DateTimeKind.Local).AddTicks(8614),
                             Icon = "bi bi-geo-alt-fill",
                             InMenu = true,
                             IsActive = true,
@@ -2785,7 +2705,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 9,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 66, DateTimeKind.Local).AddTicks(6270),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 14, DateTimeKind.Local).AddTicks(8617),
                             Icon = "bi bi-view-list",
                             InMenu = true,
                             IsActive = true,
@@ -2801,7 +2721,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 10,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 66, DateTimeKind.Local).AddTicks(6274),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 14, DateTimeKind.Local).AddTicks(8620),
                             Icon = "bi bi-window-stack",
                             InMenu = true,
                             IsActive = true,
@@ -2817,7 +2737,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 11,
                             CategoryId = 2,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 66, DateTimeKind.Local).AddTicks(6277),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 14, DateTimeKind.Local).AddTicks(8623),
                             Icon = "fa fa-anchor",
                             InMenu = true,
                             IsActive = true,
@@ -2833,7 +2753,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 12,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(1945),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1302),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -2848,7 +2768,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 13,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2461),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1842),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -2863,7 +2783,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 14,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2471),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1853),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -2878,7 +2798,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 15,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2474),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1857),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -2893,7 +2813,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 16,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2477),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1868),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -2908,7 +2828,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 17,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2493),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1874),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -2923,7 +2843,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 18,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2496),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1887),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -2938,7 +2858,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 19,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2499),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1890),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -2953,7 +2873,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 20,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2502),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1893),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -2968,7 +2888,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 21,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2505),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1897),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -2983,7 +2903,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 22,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2519),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1899),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -2998,7 +2918,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 23,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2523),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1902),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3013,7 +2933,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 24,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2525),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1905),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3028,7 +2948,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 25,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2528),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1907),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3043,7 +2963,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 26,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2530),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1910),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3058,7 +2978,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 27,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2533),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1912),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3073,7 +2993,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 28,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2536),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1915),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3088,7 +3008,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 29,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2547),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1918),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3103,7 +3023,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 30,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2550),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1921),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3118,7 +3038,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 31,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2553),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1923),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3133,7 +3053,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 32,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2556),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1926),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3148,7 +3068,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 33,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2558),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1928),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3163,7 +3083,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 34,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2561),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1931),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3178,7 +3098,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 35,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2563),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1934),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3193,7 +3113,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 36,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2566),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1936),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3208,7 +3128,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 37,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2569),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1939),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3223,7 +3143,7 @@ namespace Acadimia.Data.Migrations
                         {
                             Id = 38,
                             CategoryId = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(2571),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(1941),
                             InMenu = false,
                             IsActive = true,
                             IsAjax = true,
@@ -3701,8 +3621,8 @@ namespace Acadimia.Data.Migrations
                             Id = "D3E20CBB-2AD1-4D55-9A1E-4CEEC5B4CDE3",
                             AccessFailedCount = 0,
                             Avatar = "default_avatar.png",
-                            ConcurrencyStamp = "db1a740f-2ed6-4774-a16f-7c4b9768a4d8",
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(9868),
+                            ConcurrencyStamp = "9e64ace4-4f21-4fe8-8e5d-8ee7296afffb",
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(8864),
                             Email = "admin@Academia.com",
                             EmailConfirmed = false,
                             GenderId = 2,
@@ -3714,7 +3634,7 @@ namespace Acadimia.Data.Migrations
                             PasswordHash = "0594727849Ziad#",
                             PhoneNumber = "",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "ffffea2c-c3c1-400b-b2d2-b43f96f269a7",
+                            SecurityStamp = "78a56435-7d8f-44c3-9f57-1f08ef11f0e9",
                             TwoFactorEnabled = false,
                             UserName = "admin@Academia.com",
                             UserTypeId = 1
@@ -4016,35 +3936,35 @@ namespace Acadimia.Data.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(8292),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(7325),
                             IsDeleted = false,
                             Name = "مدير النظام"
                         },
                         new
                         {
                             Id = 2,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(9059),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(8089),
                             IsDeleted = false,
                             Name = "مستخدم"
                         },
                         new
                         {
                             Id = 3,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(9069),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(8099),
                             IsDeleted = false,
                             Name = "الطالب"
                         },
                         new
                         {
                             Id = 4,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(9072),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(8101),
                             IsDeleted = false,
                             Name = "المعلم"
                         },
                         new
                         {
                             Id = 5,
-                            CreatedOn = new DateTime(2026, 9, 10, 14, 39, 21, 68, DateTimeKind.Local).AddTicks(9073),
+                            CreatedOn = new DateTime(2026, 9, 8, 14, 15, 55, 16, DateTimeKind.Local).AddTicks(8102),
                             IsDeleted = false,
                             Name = "ولي الامر"
                         });
@@ -4569,11 +4489,6 @@ namespace Acadimia.Data.Migrations
 
             modelBuilder.Entity("Acadimia.Data.Models.Group", b =>
                 {
-                    b.HasOne("Acadimia.Data.Models.Course", "Course")
-                        .WithMany()
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Acadimia.Data.Models.Grade", "Grade")
                         .WithMany()
                         .HasForeignKey("GradeId")
@@ -4586,22 +4501,9 @@ namespace Acadimia.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Course");
-
                     b.Navigation("Grade");
 
                     b.Navigation("Teacher");
-                });
-
-            modelBuilder.Entity("Acadimia.Data.Models.GroupScheduleDay", b =>
-                {
-                    b.HasOne("Acadimia.Data.Models.Group", "Group")
-                        .WithMany()
-                        .HasForeignKey("GroupId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Group");
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.JoinRequest", b =>
