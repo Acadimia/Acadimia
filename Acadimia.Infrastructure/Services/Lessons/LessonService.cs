@@ -208,14 +208,35 @@ namespace Acadimia.Infrastructure.Services.Lessons
             return result;
         }
 
-        public async Task<List<Lesson>> GetScheduleAsync(int? courseId, int? groupId)
+        public async Task<List<LessonScheduleRowDto>> GetScheduleAsync(int? courseId, int? groupId)
         {
-            var query = _context.Lessons.Include(l => l.Group).Include(l => l.Course).AsQueryable();
+            var query = _context.Lessons
+                .Include(l => l.Group).ThenInclude(g => g.Course)
+                .Include(l => l.Course)
+                .AsQueryable();
 
             if (courseId != null) query = query.Where(l => l.CourseId == courseId);
             if (groupId != null) query = query.Where(l => l.GroupId == groupId);
 
-            return await query.OrderBy(l => l.ScheduledDate).ThenBy(l => l.StartTime).ToListAsync();
+            var lessons = await query.OrderBy(l => l.ScheduledDate).ThenBy(l => l.StartTime).ToListAsync();
+
+            return lessons.Select(l =>
+            {
+                var deliveryType = l.Course?.DeliveryType ?? l.Group?.Course?.DeliveryType;
+                return new LessonScheduleRowDto
+                {
+                    LessonId = l.Id,
+                    CourseType = deliveryType,
+                    Topic = l.Title,
+                    Date = l.ScheduledDate,
+                    Day = l.ScheduledDate.DayOfWeek,
+                    StartTime = l.StartTime,
+                    DurationMinutes = l.DurationMinutes,
+                    PlatformOrRoom = deliveryType == CourseDeliveryType.Online
+                        ? $"{l.MeetingPlatform} — {l.MeetingUrl}"
+                        : l.Room ?? "—"
+                };
+            }).ToList();
         }
     }
 }

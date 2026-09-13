@@ -8,7 +8,7 @@ namespace Acadimia.Infrastructure.Services.Lessons
         Task<OperationResult> CreateAsync(LessonInputDto input);  
         Task<OperationResult> UpdateAsync(LessonInputDto input);   
         Task<OperationResult> CancelAsync(LessonCancelDto input); 
-        Task<OperationResult> ConfigureMeetingAsync(MeetingConfigInputDto input); 
-        Task<List<Lesson>> GetScheduleAsync(int? courseId, int? groupId); 
+        Task<OperationResult> ConfigureMeetingAsync(MeetingConfigInputDto input);
+        Task<List<LessonScheduleRowDto>> GetScheduleAsync(int? courseId, int? groupId);
     }
 }

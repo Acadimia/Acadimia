@@ -14,5 +14,8 @@ namespace Acadimia.Data.Models
         public int GradeId { get; set; }
         public Grade Grade { get; set; }
         public string WhatsAppNumber { get; set; }
+
+        public string? Location { get; set; }
+
     }
 }

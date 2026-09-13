@@ -27,6 +27,7 @@ namespace Acadimia.Infrastructure.Dtos.Lessons
         public MeetingPlatform? MeetingPlatform { get; set; }
         public string? MeetingUrl { get; set; }
         public string? MeetingInstructions { get; set; }
+        public string? Room { get; set; } 
     }
 
     public class MeetingConfigInputDto

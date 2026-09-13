@@ -7,8 +7,9 @@ namespace Acadimia.Infrastructure.Services.Courses
     {
         Task<PagedResultDto<List<Course>>> GetAllAsync(PagedResultRequestDto<Course> input);
         Task<Course> GetByIdOrDefaultAsync(int id);
-        Task<OperationResult> CreateEditAsync(CourseInputDto input); // FR-I01 / FR-I05
-        Task<OperationResult> ConfigureGroupScheduleAsync(GroupScheduleInputDto input); // FR-I02 / FR-I06
-        Task<List<Student>> GetGroupStudentsAsync(int groupId, string? keyword); // FR-I03
+        Task<OperationResult> CreateEditAsync(CourseInputDto input); 
+        Task<OperationResult> ConfigureGroupScheduleAsync(GroupScheduleInputDto input); 
+        Task<List<StudentGroupRosterDto>> GetGroupStudentsAsync(int groupId, string? keyword);
+
     }
 }

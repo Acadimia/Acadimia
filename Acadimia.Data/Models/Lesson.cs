@@ -19,5 +19,7 @@ namespace Acadimia.Data.Models
         public string? MeetingUrl { get; set; }
         public string? MeetingInstructions { get; set; }
         public string? CancellationReason { get; set; }
+
+        public string? Room { get; set; }
     }
 }

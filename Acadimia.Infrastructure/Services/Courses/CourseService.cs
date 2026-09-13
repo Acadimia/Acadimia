@@ -192,7 +192,7 @@ namespace Acadimia.Infrastructure.Services.Courses
             return result;
         }
 
-        public async Task<List<Student>> GetGroupStudentsAsync(int groupId, string? keyword)
+        public async Task<List<StudentGroupRosterDto>> GetGroupStudentsAsync(int groupId, string? keyword)
         {
             var query = _context.Enrollments
                 .Where(e => e.GroupId == groupId && e.Status == EnrollmentStatus.Active)
@@ -201,7 +201,13 @@ namespace Acadimia.Infrastructure.Services.Courses
             if (!string.IsNullOrWhiteSpace(keyword))
                 query = query.Where(s => s.Name.Contains(keyword) || s.WhatsAppNumber.Contains(keyword));
 
-            return await query.ToListAsync();
+            return await query.Select(s => new StudentGroupRosterDto
+            {
+                StudentId = s.Id,
+                Name = s.Name,
+                PhoneNumber = s.WhatsAppNumber,
+                Location = s.Location
+            }).ToListAsync();
         }
     }
 }
