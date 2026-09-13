@@ -8,11 +8,11 @@ namespace Acadimia.Core.Enums
 {
     public enum GeneralEnums
     {
-        Gender = 1,
+        Gender = 5,
         Kinship = 20,
 
-        Male = 2,   // Gender
-        Female = 3,
+        Male = 6,   // Gender
+        Female = 7,
 
         ParentPageId = 1,   // Parent Page Id
 
