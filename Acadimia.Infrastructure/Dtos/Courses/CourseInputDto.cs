@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Acadimia.Core.Enums;
+using Acadimia.Data.Enums;
 
 namespace Acadimia.Infrastructure.Dtos.Courses
 {

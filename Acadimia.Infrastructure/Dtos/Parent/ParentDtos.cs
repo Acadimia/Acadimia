@@ -14,7 +14,7 @@
     {
         public DateTime SessionDate { get; set; }
         public string GroupName { get; set; }
-        public Acadimia.Core.Enums.AttendanceStatus Status { get; set; }
+        public Acadimia.Data.Enums.AttendanceStatus Status { get; set; }
         public string? Notes { get; set; }
     }
 

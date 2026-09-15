@@ -1,8 +1,7 @@
-using Acadimia.Core.Enums;
+using Acadimia.Data.Enums;
 
 namespace Acadimia.Data.Models
 {
-    // In-app/dashboard and email alert for a user.
     public class Notification : BaseModel
     {
         public int Id { get; set; }

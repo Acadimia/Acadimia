@@ -1,4 +1,4 @@
-using Acadimia.Core.Enums;
+using Acadimia.Data.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Acadimia.Data.Models

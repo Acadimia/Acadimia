@@ -73,5 +73,3 @@ namespace Acadimia.Api.Controllers
                 => Ok(await _lessonService.GetScheduleAsync(courseId, groupId));
         }
     }
-}
-}

@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Acadimia.Core\Acadimia.Core.csproj" />
     <ProjectReference Include="..\Acadimia.Data\Acadimia.Data.csproj" />
   </ItemGroup>
 

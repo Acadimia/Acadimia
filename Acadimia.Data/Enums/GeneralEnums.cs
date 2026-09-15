@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Acadimia.Core.Enums
+namespace Acadimia.Data.Enums
 {
     public enum GeneralEnums
     {
@@ -32,22 +32,22 @@ namespace Acadimia.Core.Enums
         ConstantId = 11,
 
     }
-        public enum AttendanceStatus
-    {
-        Present = 1,
-        Absent = 2,
-        Late = 3,
-        Excused = 4
-    }
+    //    public enum AttendanceStatus
+    //{
+    //    Present = 1,
+    //    Absent = 2,
+    //    Late = 3,
+    //    Excused = 4
+    //}
 
-    public enum NotificationType
-    {
-        JoinRequest = 1,
-        Wallet = 2,
-        Schedule = 3,
-        System = 4,
-        Booking = 5
-    }
+    //public enum NotificationType
+    //{
+    //    JoinRequest = 1,
+    //    Wallet = 2,
+    //    Schedule = 3,
+    //    System = 4,
+    //    Booking = 5
+    //}
     public enum BookingStatus
     {
         Pending = 1,

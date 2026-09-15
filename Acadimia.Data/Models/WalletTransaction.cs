@@ -1,14 +1,9 @@
-using Acadimia.Core.Enums;
+using Acadimia.Data.Enums;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Acadimia.Data.Models
 {
-    // The single unified feed behind the wallet's transaction history screen.
-    // A row is created the moment a top-up or withdrawal request is submitted
-    // (Status = Pending) and is kept in sync as Admin/Finance decides on it
-    // (Accepted / Rejected / Completed), so the wallet UI can show a full
-    // "received" (Direction = In) and "sent" (Direction = Out) history with a
-    // clear status on every row - including instructor withdrawals to their bank.
+    
     public class WalletTransaction : BaseModel
     {
         public int Id { get; set; }

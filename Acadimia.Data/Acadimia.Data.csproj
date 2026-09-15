@@ -21,7 +21,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Acadimia.Core\Acadimia.Core.csproj" />
+		<ProjectReference Include="..\Acadimia.Core\Acadimia.Core.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

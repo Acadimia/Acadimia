@@ -1,5 +1,5 @@
 ﻿// Acadimia.Infrastructure/Services/Parent/ParentService.cs
-using Acadimia.Core.Enums;
+using Acadimia.Data.Enums;
 using Acadimia.Data.DbContext;
 using Acadimia.Data.Models;
 using Acadimia.Data.Resources;

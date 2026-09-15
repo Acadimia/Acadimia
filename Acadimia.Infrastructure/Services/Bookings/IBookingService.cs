@@ -1,4 +1,4 @@
-﻿using Acadimia.Core.Enums;
+﻿using Acadimia.Data.Enums;
 using Acadimia.Infrastructure.Dtos.Bookings;
 
 namespace Acadimia.Infrastructure.Services.Bookings

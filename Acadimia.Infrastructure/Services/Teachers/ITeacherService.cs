@@ -1,4 +1,4 @@
-﻿using Acadimia.Core.Enums;
+﻿using Acadimia.Data.Enums;
 using Acadimia.Data.Models;
 using Acadimia.Infrastructure.Dtos.Teachers;
 

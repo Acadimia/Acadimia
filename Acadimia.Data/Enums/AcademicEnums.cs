@@ -1,4 +1,4 @@
-namespace Acadimia.Core.Enums
+namespace Acadimia.Data.Enums
 {
     public enum AttendanceStatus
     {
@@ -13,6 +13,7 @@ namespace Acadimia.Core.Enums
         JoinRequest = 1,
         Wallet = 2,
         Schedule = 3,
-        System = 4
+        System = 4,
+        Booking =5,
     }
 }

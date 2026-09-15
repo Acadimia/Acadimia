@@ -1,4 +1,4 @@
-namespace Acadimia.Core.Enums
+namespace Acadimia.Data.Enums
 {
     public enum CourseStatus
     {
