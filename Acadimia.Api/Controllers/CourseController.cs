@@ -4,14 +4,21 @@ using Acadimia.Infrastructure.Dtos;
 using Acadimia.Infrastructure.Dtos.Courses;
 using Acadimia.Infrastructure.Services;
 using Acadimia.Infrastructure.Services.Courses;
+using Acadimia.Infrastructure.Services.Ownership;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace Acadimia.Api.Controllers
 {
     public class CourseController : BaseController
     {
-        private readonly ICourseService _courseService;
-        public CourseController(ICourseService courseService) => _courseService = courseService;
+        private readonly ICourseService _courseService ;
+        private readonly IOwnershipService _ownershipService;
+        public CourseController(ICourseService courseService, Acadimia.Infrastructure.Services.Ownership.IOwnershipService ownershipService)
+        {
+            _courseService = courseService;
+            _ownershipService = ownershipService;
+        }
 
         [HttpPost]
         public async Task<IActionResult> GetAll([FromBody] DataTableRequestDto? request = null)
@@ -40,6 +47,12 @@ namespace Acadimia.Api.Controllers
                 result.Message = string.Join("<br>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
                 return result;
             }
+
+            var userId = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
+            var ownsTeacher = await _ownershipService.OwnsTeacherAsync(userId, input.TeacherId);
+            var ownsExistingCourse = input.Id == 0 || await _ownershipService.OwnsCourseAsync(userId, input.Id);
+            if (!ownsTeacher || !ownsExistingCourse) return new OperationResult(false, Messages.Failed);
+
             return await _courseService.CreateEditAsync(input);
         }
 
@@ -52,6 +65,11 @@ namespace Acadimia.Api.Controllers
                 result.Message = string.Join("<br>", ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage));
                 return result;
             }
+
+            var userId = User.FindFirstValue(System.Security.Claims.ClaimTypes.NameIdentifier);
+            if (!await _ownershipService.OwnsGroupAsync(userId, input.GroupId))
+                return new OperationResult(false, Messages.Failed);
+
             return await _courseService.ConfigureGroupScheduleAsync(input);
         }
 

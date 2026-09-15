@@ -52,8 +52,9 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(
                 "https://pixely-frame-magic.vercel.app",     // production frontend (Vercel) — no trailing slash
                 "https://academia-platform.netlify.app",     // production frontend (Netlify) — no trailing slash
-                "http://localhost:3000"                      // local dev (React/Vue/Angular default)
-              )
+                "http://localhost:3000",                   // local dev (React/Vue/Angular default)
+            "https://academia-platform.vercel.app/"
+                )
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials(); // needed if you use cookies (your Identity cookie auth relies on this)

@@ -340,10 +340,57 @@ namespace Acadimia.Data.DbContext
                 entity.HasIndex(l => new { l.GroupId, l.ScheduledDate });
                 entity.HasIndex(l => new { l.CourseId, l.ScheduledDate });
             });
+
+
+
+            builder.Entity<TeacherAvailability>().HasQueryFilter(x => !x.IsDeleted);
+            builder.Entity<Booking>().HasQueryFilter(x => !x.IsDeleted);
+            builder.Entity<TeacherRating>().HasQueryFilter(x => !x.IsDeleted);
+
+            builder.Entity<Teacher>(entity =>
+    {
+        entity.HasOne(t => t.User).WithMany().HasForeignKey(t => t.UserId).OnDelete(DeleteBehavior.Restrict);
+        entity.HasIndex(t => t.UserId).IsUnique();
+    });
+
+            builder.Entity<TeacherAvailability>(entity =>
+            {
+                entity.HasOne(a => a.Teacher).WithMany().HasForeignKey(a => a.TeacherId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasIndex(a => new { a.TeacherId, a.DayOfWeek });
+            });
+
+            builder.Entity<TeacherSubject>(entity =>
+            {
+                entity.HasOne(ts => ts.Teacher).WithMany().HasForeignKey(ts => ts.TeacherId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(ts => ts.Subject).WithMany().HasForeignKey(ts => ts.SubjectId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasIndex(ts => new { ts.TeacherId, ts.SubjectId }).IsUnique();
+            });
+
+            builder.Entity<TeacherGradeLevel>(entity =>
+            {
+                entity.HasOne(tg => tg.Teacher).WithMany().HasForeignKey(tg => tg.TeacherId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(tg => tg.Grade).WithMany().HasForeignKey(tg => tg.GradeId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasIndex(tg => new { tg.TeacherId, tg.GradeId }).IsUnique();
+            });
+
+            builder.Entity<Booking>(entity =>
+            {
+                entity.HasOne(b => b.Teacher).WithMany().HasForeignKey(b => b.TeacherId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(b => b.Student).WithMany().HasForeignKey(b => b.StudentId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(b => b.Subject).WithMany().HasForeignKey(b => b.SubjectId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(b => b.Grade).WithMany().HasForeignKey(b => b.GradeId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasIndex(b => new { b.TeacherId, b.Date, b.StartTime }); // conflict-check queries
+            });
+
+            builder.Entity<TeacherRating>(entity =>
+            {
+                entity.HasOne(r => r.Booking).WithMany().HasForeignKey(r => r.BookingId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(r => r.Teacher).WithMany().HasForeignKey(r => r.TeacherId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(r => r.Student).WithMany().HasForeignKey(r => r.StudentId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasIndex(r => r.BookingId).IsUnique(); // one rating per booking (FR-T11)
+            });
         }
-
-
-        public DbSet<User> Users { get; set; }
+public DbSet<User> Users { get; set; }
         public DbSet<UserType> UserTypes { get; set; }
         public DbSet<UserPermission> UserPermissions { get; set; }
         public DbSet<Constant> Constants { get; set; }
@@ -387,6 +434,11 @@ namespace Acadimia.Data.DbContext
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
 
+        public DbSet<TeacherAvailability> TeacherAvailabilities { get; set; }
+        public DbSet<TeacherSubject> TeacherSubjects { get; set; }
+        public DbSet<TeacherGradeLevel> TeacherGradeLevels { get; set; }
+        public DbSet<Booking> Bookings { get; set; }
+        public DbSet<TeacherRating> TeacherRatings { get; set; }
     }
 
 }
