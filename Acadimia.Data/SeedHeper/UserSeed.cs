@@ -17,10 +17,9 @@ namespace Acadimia.Data.SeedHeper
             // seed User Type
             builder.Entity<UserType>().HasData(
                 new UserType { Id = 1, Name = "مدير النظام" },
-                new UserType { Id = 2, Name = "مستخدم" },
-                new UserType { Id = 3, Name = "الطالب" },
-                new UserType { Id = 4, Name = "المعلم" },
-                new UserType { Id = 5, Name = "ولي الامر" }
+                new UserType { Id = 2, Name = "الطالب" },
+                new UserType { Id = 3, Name = "المعلم" },
+                new UserType { Id = 4, Name = "ولي الامر" }
 
 
 

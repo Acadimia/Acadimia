@@ -6,6 +6,17 @@ using System.Threading.Tasks;
 
 namespace Acadimia.Data.Enums
 {
+
+    public static class UserTypeIds
+    {
+        public const int Admin = 1;
+        public const int Student = 3;
+        public const int Teacher = 4;
+        public const int Parent = 5;
+
+        // الأنواع المسموح للزائر يسجّل نفسه فيها. الأدمن (1) ممنوع نهائيًا.
+        public static readonly int[] SelfRegistration = { Student, Teacher, Parent };
+    }
     public enum GeneralEnums
     {
         Gender = 5,

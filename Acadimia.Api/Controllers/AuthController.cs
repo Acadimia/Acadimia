@@ -1,12 +1,14 @@
-﻿using Acadimia.Data.Models;
+﻿using Acadimia.Api.Helper.Claims;
+using Acadimia.Data.Enums;
+using Acadimia.Data.Models;
 using Acadimia.Data.Resources;
-using Acadimia.Infrastructure.Services;
-using Acadimia.Api.Helper.Claims;
 using Acadimia.Infrastructure.Dtos.Auth;
+using Acadimia.Infrastructure.Services;
+using Acadimia.Infrastructure.Services.Users;
+using Acadimia.Infrastructure.Services.Wallets;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Acadimia.Infrastructure.Services.Wallets;
 namespace Acadimia.Api.Controllers
 {
     [AllowAnonymous]
@@ -17,18 +19,22 @@ namespace Acadimia.Api.Controllers
         private readonly IClaimsService _claimsService;
         private readonly ILogger<AuthController> _logger;
         private readonly IWalletService _walletService;
+        private readonly IUsersService _usersService;
         public AuthController(
             SignInManager<User> signInManager,
             UserManager<User> userManager,
             IClaimsService claimsService,
             ILogger<AuthController> logger,
-            IWalletService walletService)
+            IWalletService walletService,
+            IUsersService usersService
+            )
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _claimsService = claimsService;
             _logger = logger;
             _walletService = walletService;
+             _usersService = usersService;
 
         }
 
@@ -92,7 +98,13 @@ namespace Acadimia.Api.Controllers
                 result.Message = Messages.UniqueEmail;
                 return result;
             }
+            var userTypeId = input.UserTypeId ?? UserTypeIds.Student;
 
+            if (!UserTypeIds.SelfRegistration.Contains(userTypeId))
+            {
+                result.Message = Messages.Invalid;
+                return result;
+            }
             var user = new User
             {
                 Id = Guid.NewGuid().ToString(),
@@ -130,6 +142,10 @@ namespace Acadimia.Api.Controllers
             result.Message = Messages.Success;
             return result;
         }
+
+        [HttpGet]
+        public async Task<IActionResult> RegistrationOptions() => Ok(await _usersService.GetRegistrationOptionsAsync());
+
         [HttpPost]
         public async Task<OperationResult> Logout()
         {

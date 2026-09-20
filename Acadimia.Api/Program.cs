@@ -66,11 +66,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.LoginPath = new PathString("/Auth/login");
     options.LogoutPath = new PathString("/Auth/logout");
-    // options.AccessDeniedPath = new PathString("/Auth/Accessdenied");
-
-    // مطلوب لأن الفرونت اند (Vercel/Netlify) والباك اند (هذا السيرفر) على
-    // دومينين مختلفين تمامًا — بدون هذا الإعداد، متصفحات Chrome/Edge/Firefox
-    // الحديثة برفضوا يخزّنوا أو يرسلوا كوكي الجلسة على طلبات cross-origin.
     options.Cookie.SameSite = SameSiteMode.None;
     options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // SameSite=None يتطلب HTTPS إجباريًا
 });

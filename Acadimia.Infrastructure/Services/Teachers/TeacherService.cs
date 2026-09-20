@@ -194,7 +194,8 @@ namespace Acadimia.Infrastructure.Services.Teachers
 
         public async Task<TeacherProfileDto?> GetPublicProfileAsync(int teacherId)
         {
-            var teacher = await _context.Teachers.Include(t => t.User).SingleOrDefaultAsync(t => t.Id == teacherId);
+            var teacher = await _context.Teachers.Include(t => t.User)
+        .SingleOrDefaultAsync(t => t.Id == teacherId && t.IsPublicForDiscovery);
             if (teacher == null) return null;
 
             var subjects = await _context.Set<TeacherSubject>().Where(ts => ts.TeacherId == teacherId).Include(ts => ts.Subject).ToListAsync();
@@ -221,7 +222,7 @@ namespace Acadimia.Infrastructure.Services.Teachers
                 RatingCount = ratings.Count
             };
         }
-
+       
         public async Task<OperationResult> UpdateProfileAsync(string userId, TeacherProfileInputDto input)
         {
             var result = new OperationResult(false, Messages.Failed);

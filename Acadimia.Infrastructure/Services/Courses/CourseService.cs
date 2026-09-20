@@ -11,39 +11,48 @@ namespace Acadimia.Infrastructure.Services.Courses
 {
     public class CourseService : BaseService, ICourseService
     {
-        private static readonly HashSet<string> AllowedSortColumns = new(StringComparer.OrdinalIgnoreCase)
+        private static IQueryable<CourseListItemDto> Project(IQueryable<Course> q) => q.Select(c => new CourseListItemDto
         {
-            "Id", "Title", "Price", "Status", "DeliveryType", "CreatedOn"
+            Id = c.Id,
+            Title = c.Title,
+            Description = c.Description,
+            Price = c.Price,
+            DeliveryType = c.DeliveryType,
+            Status = c.Status,
+            MaxStudents = c.MaxStudents,
+            TeacherId = c.TeacherId,
+            TeacherName = c.Teacher.User != null ? c.Teacher.User.Name : null,
+            SubjectName = c.Subject != null ? c.Subject.Name : null,
+            CategoryName = c.Category.Name
+        });
+        private static readonly HashSet<string> AllowedSortColumns = new(StringComparer.OrdinalIgnoreCase)
+          {
+    "Id", "Title", "Price", "Status", "DeliveryType", "CreatedOn"
         };
-
         public CourseService(ApplicationDbContext context, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
-            : base(context, userManager, httpContextAccessor)
+        : base(context, userManager, httpContextAccessor)
         {
         }
-
-        public async Task<PagedResultDto<List<Course>>> GetAllAsync(PagedResultRequestDto<Course> input)
+        public async Task<PagedResultDto<List<CourseListItemDto>>> GetAllAsync(PagedResultRequestDto<Course> input)
         {
             IQueryable<Course> courses = _context.Courses
-                .Include(c => c.Teacher).Include(c => c.Subject).Include(c => c.Category)
-                .Where(c => input.SearchValue.TeacherId == 0 || c.TeacherId == input.SearchValue.TeacherId);
+                .Where(c => input.SearchValue.TeacherId == 0 || c.TeacherId == input.SearchValue.TeacherId)
+                .Where(c => input.SearchValue.Status == 0 || c.Status == input.SearchValue.Status);
 
             courses = courses.ApplySort(input.SortColumn, input.SortColumnDirection, AllowedSortColumns, defaultSort: "Id desc");
 
-            return new PagedResultDto<List<Course>>
+            return new PagedResultDto<List<CourseListItemDto>>
             {
-                Data = await courses.Skip(input.Skip).Take(input.PageSize).ToListAsync(),
-                TotalCount = await courses.CountAsync()
+                TotalCount = await courses.CountAsync(),
+                Data = await Project(courses.Skip(input.Skip).Take(input.PageSize)).ToListAsync()
             };
         }
-        public async Task<Course> GetByIdOrDefaultAsync(int id)
+
+        public async Task<CourseListItemDto?> GetByIdAsync(int id, bool publishedOnly)
         {
-            var course = await _context.Courses
-                .Include(c => c.Teacher).Include(c => c.Subject).Include(c => c.Category)
-                .SingleOrDefaultAsync(c => c.Id == id);
-
-            return course ?? new Course();
+            var q = _context.Courses.Where(c => c.Id == id && (!publishedOnly || c.Status == CourseStatus.Published));
+            return await Project(q).FirstOrDefaultAsync();
         }
-
         public async Task<OperationResult> CreateEditAsync(CourseInputDto input)
         {
             var result = new OperationResult(false, Messages.Invalid);
