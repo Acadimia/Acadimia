@@ -1,18 +1,20 @@
-﻿using Acadimia.Data.Models;
-using Acadimia.Data.Resources;
-using Acadimia.Infrastructure.Services.Users;
-using Acadimia.Infrastructure.Services;
-using Microsoft.AspNetCore.Mvc;
-using Acadimia.Infrastructure.Services.Users.Dto;
-using Microsoft.AspNetCore.Identity;
-using System.Security.Claims;
+﻿using Acadimia.Api.Helper.Authorization;
 using Acadimia.Api.Helper.Claims;
 using Acadimia.Api.Helper.Files;
-using Newtonsoft.Json;
+using Acadimia.Data.Models;
+using Acadimia.Data.Resources;
 using Acadimia.Infrastructure.Dtos.User;
+using Acadimia.Infrastructure.Services;
+using Acadimia.Infrastructure.Services.Users;
+using Acadimia.Infrastructure.Services.Users.Dto;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Security.Claims;
 
 namespace Acadimia.Api.Controllers
 {
+    [RequirePagePermission]
     public class UserController : BaseController
     {
         private readonly IUsersService _usersService;

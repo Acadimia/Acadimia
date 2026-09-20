@@ -24,5 +24,9 @@ namespace Acadimia.Infrastructure.Services.Ownership
             await _context.Lessons.Where(l => l.Id == lessonId).AnyAsync(l =>
                 (l.Group != null && l.Group.Teacher.UserId == userId) ||
                 (l.Course != null && l.Course.Teacher.UserId == userId));
+
+        public async Task<int?> GetUserTypeIdAsync(string userId) =>
+    await _context.Users.Where(u => u.Id == userId && !u.IsDeleted && u.IsActive)
+        .Select(u => (int?)u.UserTypeId).FirstOrDefaultAsync();
     }
 }

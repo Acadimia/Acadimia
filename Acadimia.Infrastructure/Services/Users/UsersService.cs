@@ -1,19 +1,20 @@
-﻿using AutoMapper;
+﻿using Acadimia.Data.DbContext;
+using Acadimia.Data.Enums;
 using Acadimia.Data.Models;
+using Acadimia.Data.Resources;
+using Acadimia.Infrastructure.Dtos.Auth;
 using Acadimia.Infrastructure.Services.Users.Dto;
+using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq.Dynamic.Core;
-using Acadimia.Data.Resources;
-using Acadimia.Data.DbContext;
-using Acadimia.Data.Enums;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
 
 namespace Acadimia.Infrastructure.Services.Users
 {
@@ -169,7 +170,15 @@ namespace Acadimia.Infrastructure.Services.Users
 
             return result;
         }
-
+        public async Task<RegistrationOptionsDto> GetRegistrationOptionsAsync() => new()
+        {
+            Genders = await _context.Constants
+        .Where(c => c.ParentId == (int)GeneralEnums.Gender)
+        .Select(c => new LookupItemDto { Id = c.Id, Name = c.Name }).ToListAsync(),
+            UserTypes = await _context.UserTypes
+        .Where(t => UserTypeIds.SelfRegistration.Contains(t.Id))
+        .Select(t => new LookupItemDto { Id = t.Id, Name = t.Name }).ToListAsync()
+        };
         public async Task<OperationResult> DeleteAsync(string id)
         {
             var result = new OperationResult();

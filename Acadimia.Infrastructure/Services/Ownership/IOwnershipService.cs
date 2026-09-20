@@ -7,5 +7,6 @@
         Task<bool> OwnsCourseAsync(string userId, int courseId);
         Task<bool> OwnsGroupAsync(string userId, int groupId);
         Task<bool> OwnsLessonAsync(string userId, int lessonId);
+        Task<int?> GetUserTypeIdAsync(string userId);
     }
 }
