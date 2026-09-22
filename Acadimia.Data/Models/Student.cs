@@ -8,7 +8,7 @@ namespace Acadimia.Data.Models
     public class Student : BaseModel
     {
         public int Id { get; set; }
-        public string Name { get; set; }              
+        public string Name { get; set; }
         public int FatherId { get; set; }
         public Father Father { get; set; }
         public int GradeId { get; set; }
@@ -16,6 +16,9 @@ namespace Acadimia.Data.Models
         public string WhatsAppNumber { get; set; }
 
         public string? Location { get; set; }
+
+        public string? UserId { get; set; }
+        public User? User { get; set; }
 
     }
 }

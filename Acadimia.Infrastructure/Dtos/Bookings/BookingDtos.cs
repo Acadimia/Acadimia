@@ -35,9 +35,9 @@ namespace Acadimia.Infrastructure.Dtos.Bookings
     {
         public int Id { get; set; }
         public int TeacherId { get; set; }
-        public string TeacherName { get; set; }
+        public string? TeacherName { get; set; }
         public string StudentId { get; set; }
-        public string StudentName { get; set; }
+        public string? StudentName { get; set; }
         public int? SubjectId { get; set; }
         public string? SubjectName { get; set; }
         public CourseDeliveryType TeachingMode { get; set; }
@@ -48,5 +48,47 @@ namespace Acadimia.Infrastructure.Dtos.Bookings
         public BookingStatus Status { get; set; }
         public string? StudentNote { get; set; }
         public string? RejectionReason { get; set; }
+        public DateTime? PaidOn { get; set; }
+        public string? CancellationReason { get; set; }
+        public DateTime CreatedOn { get; set; }
+    }
+
+    // ---- FR-S14 ----
+    public class CancelBookingDto
+    {
+        [Required] public int BookingId { get; set; }
+        public string? Reason { get; set; }
+    }
+
+    // ---- FR-S15 ----
+    public class RescheduleRequestInputDto
+    {
+        [Required] public int BookingId { get; set; }
+        [Required] public DateTime ProposedDate { get; set; }
+        [Required] public TimeSpan ProposedStartTime { get; set; }
+        public string? Note { get; set; }
+    }
+
+    public class RescheduleDecisionDto
+    {
+        [Required] public int RequestId { get; set; }
+        [Required] public bool Approve { get; set; }
+        public string? RejectionReason { get; set; }
+    }
+
+    public class RescheduleRequestDto
+    {
+        public int Id { get; set; }
+        public int BookingId { get; set; }
+        public string? TeacherName { get; set; }
+        public string? StudentName { get; set; }
+        public DateTime OriginalDate { get; set; }
+        public TimeSpan OriginalStartTime { get; set; }
+        public DateTime ProposedDate { get; set; }
+        public TimeSpan ProposedStartTime { get; set; }
+        public string? Note { get; set; }
+        public RescheduleRequestStatus Status { get; set; }
+        public string? RejectionReason { get; set; }
+        public DateTime CreatedOn { get; set; }
     }
 }

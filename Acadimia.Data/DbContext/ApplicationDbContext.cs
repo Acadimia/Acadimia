@@ -24,6 +24,7 @@ namespace Acadimia.Data.DbContext
             builder.Entity<Grade>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Father>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<UserType>().HasQueryFilter(x => !x.IsDeleted);
+            builder.Entity<BookingRescheduleRequest>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Page>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Group>(entity =>
             {
@@ -438,6 +439,8 @@ public DbSet<User> Users { get; set; }
         public DbSet<TeacherSubject> TeacherSubjects { get; set; }
         public DbSet<TeacherGradeLevel> TeacherGradeLevels { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<BookingRescheduleRequest> BookingRescheduleRequests { get; set; }
+        
         public DbSet<TeacherRating> TeacherRatings { get; set; }
     }
 

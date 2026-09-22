@@ -34,5 +34,7 @@ namespace Acadimia.Data.Models
         public string? RejectionReason { get; set; }
 
         public DateTime? PaidOn { get; set; }
+        public string? CancellationReason { get; set; }
+        public DateTime? CancelledOn { get; set; }
     }
 }

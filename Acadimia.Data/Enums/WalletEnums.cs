@@ -1,8 +1,6 @@
 namespace Acadimia.Data.Enums
 {
-    // Which side of the wallet a WalletTransaction row shows up on:
-    // In  = money received into the wallet (e.g. TopUp, InstructorCredit)
-    // Out = money sent out of the wallet   (e.g. Withdrawal, EnrollmentDeduction)
+   
     public enum WalletTransactionDirection
     {
         In = 1,
@@ -14,7 +12,10 @@ namespace Acadimia.Data.Enums
         TopUp = 1,
         Withdrawal = 2,
         EnrollmentDeduction = 3,
-        InstructorCredit = 4
+        InstructorCredit = 4,
+        BookingRefund = 5,           
+        BookingRefundReversal = 6     
+
     }
 
     public enum WalletTransactionStatus

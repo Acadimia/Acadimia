@@ -11,6 +11,10 @@ namespace Acadimia.Infrastructure.Services.Ownership
         public async Task<int?> GetTeacherIdForUserAsync(string userId) =>
             await _context.Teachers.Where(t => t.UserId == userId).Select(t => (int?)t.Id).FirstOrDefaultAsync();
 
+        // Resolves the Student profile row for a login account (null = not linked yet).
+        public async Task<int?> GetStudentIdForUserAsync(string userId) =>
+            await _context.Students.Where(s => s.UserId == userId).Select(s => (int?)s.Id).FirstOrDefaultAsync();
+
         public async Task<bool> OwnsTeacherAsync(string userId, int teacherId) =>
             await _context.Teachers.AnyAsync(t => t.Id == teacherId && t.UserId == userId);
 
@@ -26,7 +30,7 @@ namespace Acadimia.Infrastructure.Services.Ownership
                 (l.Course != null && l.Course.Teacher.UserId == userId));
 
         public async Task<int?> GetUserTypeIdAsync(string userId) =>
-    await _context.Users.Where(u => u.Id == userId && !u.IsDeleted && u.IsActive)
-        .Select(u => (int?)u.UserTypeId).FirstOrDefaultAsync();
+            await _context.Users.Where(u => u.Id == userId && !u.IsDeleted && u.IsActive)
+                .Select(u => (int?)u.UserTypeId).FirstOrDefaultAsync();
     }
 }

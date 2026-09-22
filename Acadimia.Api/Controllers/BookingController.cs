@@ -1,4 +1,5 @@
-﻿using Acadimia.Data.Enums;
+using Acadimia.Api.Helper.Authorization;
+using Acadimia.Data.Enums;
 using Acadimia.Data.Resources;
 using Acadimia.Infrastructure.Dtos.Bookings;
 using Acadimia.Infrastructure.Services;
@@ -33,11 +34,11 @@ namespace Acadimia.Api.Controllers
             return await _bookingService.DecideBookingAsync(userId, input);
         }
 
-        [HttpPost]
-        public async Task<OperationResult> Cancel(int bookingId)
+        [HttpPost] // student or owning teacher; FR-S14 rules (deadline + refund) are applied in the service
+        public async Task<OperationResult> Cancel(int bookingId, string? reason = null)
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            return await _bookingService.CancelBookingAsync(userId, bookingId);
+            return await _bookingService.CancelBookingAsync(userId, bookingId, reason);
         }
 
         [HttpPost]
@@ -66,6 +67,24 @@ namespace Acadimia.Api.Controllers
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             return Ok(await _bookingService.GetTeacherBookingsAsync(userId, status));
+        }
+
+        // ---- FR-S15: instructor side of reschedule requests ----
+
+        [HttpGet]
+        [RequireUserTypes(UserTypeIds.Teacher)]
+        public async Task<IActionResult> TeacherRescheduleRequests(RescheduleRequestStatus? status = null)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return Ok(await _bookingService.GetTeacherRescheduleRequestsAsync(userId, status));
+        }
+
+        [HttpPost]
+        [RequireUserTypes(UserTypeIds.Teacher)]
+        public async Task<OperationResult> DecideReschedule(RescheduleDecisionDto input)
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            return await _bookingService.DecideRescheduleAsync(userId, input);
         }
     }
 }

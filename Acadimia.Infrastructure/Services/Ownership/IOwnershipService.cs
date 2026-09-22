@@ -3,6 +3,7 @@
     public interface IOwnershipService
     {
         Task<int?> GetTeacherIdForUserAsync(string userId);
+        Task<int?> GetStudentIdForUserAsync(string userId);
         Task<bool> OwnsTeacherAsync(string userId, int teacherId);
         Task<bool> OwnsCourseAsync(string userId, int courseId);
         Task<bool> OwnsGroupAsync(string userId, int groupId);
