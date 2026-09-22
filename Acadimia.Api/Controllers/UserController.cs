@@ -7,6 +7,7 @@ using Acadimia.Infrastructure.Dtos.User;
 using Acadimia.Infrastructure.Services;
 using Acadimia.Infrastructure.Services.Users;
 using Acadimia.Infrastructure.Services.Users.Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -119,7 +120,7 @@ namespace Acadimia.Api.Controllers
 
             return await _usersService.DeleteAsync(id);
         }
-
+        [Authorize, SkipPagePermission]
         [HttpGet]  // returns current user's profile data
         public async Task<IActionResult> MyProfileModal()
         {
@@ -132,7 +133,7 @@ namespace Acadimia.Api.Controllers
                 Genders = await _usersService.GetGendersAsync()
             });
         }
-
+        [Authorize, SkipPagePermission]
         [HttpPost] // Edit my profile User
         public async Task<OperationResult> MyProfile(MyProfileDto input)
         {
@@ -157,13 +158,13 @@ namespace Acadimia.Api.Controllers
 
             return resultEditMyProfile;
         }
-
+        [Authorize, SkipPagePermission]
         [HttpGet] 
         public IActionResult ChangePasswordModal()
         {
             return Ok(new ChangePasswordDto());
         }
-
+        [Authorize, SkipPagePermission]
         [HttpPost] // Change Password
         public async Task<OperationResult> ChangePassword(ChangePasswordDto input)
         {

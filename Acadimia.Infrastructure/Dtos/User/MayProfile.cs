@@ -7,5 +7,7 @@ namespace Acadimia.Infrastructure.Dtos.User
     {
         public MyProfileDto MyProfileDto { get; set; }
         public List<Constant> Genders { get; set; }
+        public int? UserTypeId { get; set; }
+        public string? UserTypeName { get; set; }
     }
 }
