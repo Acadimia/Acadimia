@@ -75,7 +75,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("GroupId", "SessionDate");
 
-                    b.ToTable("Attendances");
+                    b.ToTable("Attendances", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.AuditLog", b =>
@@ -130,7 +130,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AuditLogs");
+                    b.ToTable("AuditLogs", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.Constant", b =>
@@ -159,7 +159,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Constants");
+                    b.ToTable("Constants", (string)null);
 
                     b.HasData(
                         new
@@ -377,7 +377,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Courses");
+                    b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.CourseCategory", b =>
@@ -412,7 +412,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CourseCategories");
+                    b.ToTable("CourseCategories", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.Enrollment", b =>
@@ -472,7 +472,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("Enrollments");
+                    b.ToTable("Enrollments", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.Exam", b =>
@@ -523,7 +523,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("GroupId");
 
-                    b.ToTable("Exams");
+                    b.ToTable("Exams", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.ExamResult", b =>
@@ -579,7 +579,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("ExamResults");
+                    b.ToTable("ExamResults", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.Father", b =>
@@ -622,7 +622,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Fathers");
+                    b.ToTable("Fathers", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.Grade", b =>
@@ -661,7 +661,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Grades");
+                    b.ToTable("Grades", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.Group", b =>
@@ -723,7 +723,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("TeacherId");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Groups", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.GroupScheduleDay", b =>
@@ -747,7 +747,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("GroupId", "DayOfWeek");
 
-                    b.ToTable("GroupScheduleDays");
+                    b.ToTable("GroupScheduleDays", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.JoinRequest", b =>
@@ -810,7 +810,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("JoinRequests");
+                    b.ToTable("JoinRequests", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.Lesson", b =>
@@ -885,7 +885,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("GroupId", "ScheduledDate");
 
-                    b.ToTable("Lessons");
+                    b.ToTable("Lessons", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.LessonMaterial", b =>
@@ -941,7 +941,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("UploadedBy");
 
-                    b.ToTable("LessonMaterials");
+                    b.ToTable("LessonMaterials", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.Migration", b =>
@@ -958,7 +958,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Migrations");
+                    b.ToTable("Migrations", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.Module", b =>
@@ -977,7 +977,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Modules");
+                    b.ToTable("Modules", (string)null);
 
                     b.HasData(
                         new
@@ -1048,7 +1048,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Nationalities");
+                    b.ToTable("Nationalities", (string)null);
 
                     b.HasData(
                         new
@@ -2589,7 +2589,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Notifications");
+                    b.ToTable("Notifications", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.Page", b =>
@@ -2660,7 +2660,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("ParentId");
 
-                    b.ToTable("Pages");
+                    b.ToTable("Pages", (string)null);
 
                     b.HasData(
                         new
@@ -3256,7 +3256,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PageCategories");
+                    b.ToTable("PageCategories", (string)null);
 
                     b.HasData(
                         new
@@ -3327,7 +3327,7 @@ namespace Acadimia.Data.Migrations
                     b.HasIndex("ParentUserId", "StudentId")
                         .IsUnique();
 
-                    b.ToTable("ParentStudentLinks");
+                    b.ToTable("ParentStudentLinks", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.PlatformCommissionSetting", b =>
@@ -3370,7 +3370,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PlatformCommissionSettings");
+                    b.ToTable("PlatformCommissionSettings", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.PlatformRevenueLedger", b =>
@@ -3412,7 +3412,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("EnrollmentId");
 
-                    b.ToTable("PlatformRevenueLedgers");
+                    b.ToTable("PlatformRevenueLedgers", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.Student", b =>
@@ -3464,7 +3464,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("GradeId");
 
-                    b.ToTable("Students");
+                    b.ToTable("Students", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.Subject", b =>
@@ -3499,7 +3499,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Subjects");
+                    b.ToTable("Subjects", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.Teacher", b =>
@@ -3535,7 +3535,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("GradeId");
 
-                    b.ToTable("Teachers");
+                    b.ToTable("Teachers", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.TrackStudentTransfers", b =>
@@ -3587,7 +3587,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TrackStudentTransfers");
+                    b.ToTable("TrackStudentTransfers", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.User", b =>
@@ -3747,7 +3747,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("UserTypeId");
 
-                    b.ToTable("UserPermissions");
+                    b.ToTable("UserPermissions", (string)null);
 
                     b.HasData(
                         new
@@ -4016,7 +4016,7 @@ namespace Acadimia.Data.Migrations
                     b.HasIndex(new[] { "Name" }, "IX_UserTypes_UniqueName")
                         .IsUnique();
 
-                    b.ToTable("UserTypes");
+                    b.ToTable("UserTypes", (string)null);
 
                     b.HasData(
                         new
@@ -4094,7 +4094,7 @@ namespace Acadimia.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Wallets");
+                    b.ToTable("Wallets", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.WalletTopUpRequest", b =>
@@ -4156,7 +4156,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("VerifiedBy");
 
-                    b.ToTable("WalletTopUpRequests");
+                    b.ToTable("WalletTopUpRequests", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.WalletTransaction", b =>
@@ -4221,7 +4221,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("WalletId", "CreatedOn");
 
-                    b.ToTable("WalletTransactions");
+                    b.ToTable("WalletTransactions", (string)null);
                 });
 
             modelBuilder.Entity("Acadimia.Data.Models.WithdrawalRequest", b =>
@@ -4287,7 +4287,7 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("InstructorId");
 
-                    b.ToTable("WithdrawalRequests");
+                    b.ToTable("WithdrawalRequests", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
