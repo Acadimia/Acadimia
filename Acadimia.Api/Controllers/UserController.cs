@@ -10,6 +10,7 @@ using Acadimia.Infrastructure.Services.Users.Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Security.Claims;
 
@@ -63,7 +64,6 @@ namespace Acadimia.Api.Controllers
             return Ok(new { recordsFiltered = result.TotalCount, result.TotalCount, result.Data });
         }
 
-
         [HttpGet] // returns data for create/edit User form
         public async Task<IActionResult> CreateEditModal(string id)
         {
@@ -106,9 +106,9 @@ namespace Acadimia.Api.Controllers
                 if (loggedInUserId == input.Id)
                     await UpdateClaimsIfNecessary(resultCreatEditUser, input.Id);
             }
-            
+
             return resultCreatEditUser;
-		}
+        }
 
         [HttpDelete] // Delete User
         public async Task<OperationResult> Delete(string id)
@@ -120,25 +120,33 @@ namespace Acadimia.Api.Controllers
 
             return await _usersService.DeleteAsync(id);
         }
+
         [Authorize, SkipPagePermission]
-        [HttpGet]  // returns current user's profile data
+        [HttpGet] // returns current user's profile data
         public async Task<IActionResult> MyProfileModal()
         {
             var loggedInUserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _userManager.Users
+                .Include(u => u.UserType)
+                .FirstOrDefaultAsync(u => u.Id == loggedInUserId);
+
             var myProfileDto = await _usersService.GetMyProfileAsync(loggedInUserId);
 
-            return Ok(new MyProfile()
+            return Ok(new MyProfile
             {
                 MyProfileDto = myProfileDto,
-                Genders = await _usersService.GetGendersAsync()
+                Genders = await _usersService.GetGendersAsync(),
+                UserTypeId = user?.UserTypeId,
+                UserTypeName = user?.UserType?.Name
             });
         }
+
         [Authorize, SkipPagePermission]
         [HttpPost] // Edit my profile User
         public async Task<OperationResult> MyProfile(MyProfileDto input)
         {
             var result = new OperationResult(false, Messages.Invalid);
-                       
+
             if (!ModelState.IsValid)
             {
                 var message = string.Join("<br>", ModelState.Values
@@ -154,16 +162,18 @@ namespace Acadimia.Api.Controllers
             if (resultEditMyProfile.Success)
             {
                 await UpdateClaimsIfNecessary(resultEditMyProfile, input.Id);
-			}
+            }
 
             return resultEditMyProfile;
         }
+
         [Authorize, SkipPagePermission]
-        [HttpGet] 
+        [HttpGet]
         public IActionResult ChangePasswordModal()
         {
             return Ok(new ChangePasswordDto());
         }
+
         [Authorize, SkipPagePermission]
         [HttpPost] // Change Password
         public async Task<OperationResult> ChangePassword(ChangePasswordDto input)
@@ -184,18 +194,17 @@ namespace Acadimia.Api.Controllers
             return await _usersService.ChangePasswordAsync(userId, input);
         }
 
-		private async Task UpdateClaimsIfNecessary(OperationResult operationResult, string userId)
-		{
-			if (operationResult.IsNameChanged || operationResult.IsAvatarChanged)
-			{
-				var user = await _userManager.FindByIdAsync(userId);
-				if (user != null)
-				{
-					await _claimsService.UpdateUserClaims(user);
-					await _signInManager.RefreshSignInAsync(user);
-				}
-			}
-		}
-
-	}
+        private async Task UpdateClaimsIfNecessary(OperationResult operationResult, string userId)
+        {
+            if (operationResult.IsNameChanged || operationResult.IsAvatarChanged)
+            {
+                var user = await _userManager.FindByIdAsync(userId);
+                if (user != null)
+                {
+                    await _claimsService.UpdateUserClaims(user);
+                    await _signInManager.RefreshSignInAsync(user);
+                }
+            }
+        }
+    }
 }
