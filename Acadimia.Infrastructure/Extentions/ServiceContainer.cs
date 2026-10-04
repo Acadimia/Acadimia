@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Acadimia.Infrastructure.Services.Ownership;
 using Acadimia.Infrastructure.Services.Notifications;
 using Acadimia.Infrastructure.Services.Bookings;
+using Acadimia.Infrastructure.Services.JoinRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,7 @@ namespace Acadimia.Infrastructure.Extentions
             services.AddTransient<IOwnershipService, OwnershipService>();
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IBookingService, BookingService>();
+            services.AddTransient<IJoinRequestService, JoinRequestService>();
             //services.AddTransient<,>();
             //services.AddTransient<,>();
             //services.AddTransient<,>();
