@@ -341,6 +341,11 @@ namespace Acadimia.Data.DbContext
                 entity.HasIndex(l => new { l.GroupId, l.ScheduledDate });
                 entity.HasIndex(l => new { l.CourseId, l.ScheduledDate });
             });
+            builder.Entity<PlatformCommissionSetting>()
+               .HasIndex(s => s.IsActive)
+               .IsUnique()
+               .HasFilter("[IsActive] = 1"
+            );
 
 
 
