@@ -13,7 +13,6 @@ namespace Acadimia.Data.Models
         public int Id { get; set; }
         [Required]
         public int UserTypeId { get; set; }
-        [Required]
         public UserType? UserType { get; set; }
         [Required]
         public int PageId { get; set; }

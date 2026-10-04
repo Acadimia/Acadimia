@@ -14,6 +14,7 @@ namespace Acadimia.Data.DbContext
             : base(options)
         {
         }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             SeedHelper.Seed(builder);
