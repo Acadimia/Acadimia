@@ -18,5 +18,6 @@
         public List<string> Grades { get; set; } = new();
         public double? AverageRating { get; set; }
         public int RatingCount { get; set; }
+        public List<TeacherReviewDto> RecentReviews { get; set; } = new();
     }
 }

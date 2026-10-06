@@ -17,6 +17,7 @@ using Acadimia.Infrastructure.Services.Ownership;
 using Acadimia.Infrastructure.Services.Notifications;
 using Acadimia.Infrastructure.Services.Bookings;
 using Acadimia.Infrastructure.Services.JoinRequests;
+using Acadimia.Infrastructure.Services.PlatformCommission;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,7 @@ namespace Acadimia.Infrastructure.Extentions
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IBookingService, BookingService>();
             services.AddTransient<IJoinRequestService, JoinRequestService>();
+            services.AddTransient<IPlatformCommissionService, PlatformCommissionService>();
             //services.AddTransient<,>();
             //services.AddTransient<,>();
             //services.AddTransient<,>();

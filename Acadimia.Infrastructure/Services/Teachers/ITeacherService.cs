@@ -18,5 +18,6 @@ namespace Acadimia.Infrastructure.Services.Teachers
         Task<OperationResult> UpdateProfileAsync(string userId, TeacherProfileInputDto input);
         Task<OperationResult> SetAvailabilityAsync(string userId, TeacherAvailabilityInputDto input);
         Task<List<TeacherAvailability>> GetAvailabilityAsync(int teacherId, CourseDeliveryType? mode, DateTime? date);
+        Task<PagedResultDto<List<TeacherReviewDto>>> GetReviewsAsync(int teacherId, int skip, int pageSize);
     }
 }

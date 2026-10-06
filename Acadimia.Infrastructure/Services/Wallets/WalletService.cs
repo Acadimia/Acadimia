@@ -4,7 +4,9 @@ using Acadimia.Data.Models;
 using Acadimia.Data.Resources;
 using Acadimia.Infrastructure.Dtos;
 using Acadimia.Infrastructure.Dtos.Wallet;
+using Acadimia.Infrastructure.Services.Notifications;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
 using System.Linq.Dynamic.Core;
 
 namespace Acadimia.Infrastructure.Services.Wallets
@@ -12,6 +14,7 @@ namespace Acadimia.Infrastructure.Services.Wallets
     public class WalletService : IWalletService
     {
         private readonly ApplicationDbContext _context;
+        private readonly INotificationService _notificationService;
 
         // Whitelist لتفادي مشكلة Swagger اللي بيبعت "string" كقيمة افتراضية لـ SortColumn/SortColumnDirection
         private static readonly HashSet<string> AllowedSortColumns = new(StringComparer.OrdinalIgnoreCase)
@@ -23,9 +26,10 @@ namespace Acadimia.Infrastructure.Services.Wallets
             "asc", "desc"
         };
 
-        public WalletService(ApplicationDbContext context)
+        public WalletService(ApplicationDbContext context, INotificationService notificationService)
         {
             _context = context;
+            _notificationService = notificationService;
         }
 
         // ==================== Wallet lifecycle ====================
@@ -69,17 +73,29 @@ namespace Acadimia.Infrastructure.Services.Wallets
             return result;
         }
 
+        // FR-W04: مجموع طلبات السحب التي ما زال مبلغها محجوزًا
+        // (بانتظار الموافقة، أو موافق عليها وبانتظار التحويل الفعلي)
+        private async Task<decimal> GetReservedAmountAsync(string userId) =>
+            await _context.WithdrawalRequests
+                .Where(r => r.InstructorId == userId
+                    && (r.Status == WithdrawalRequestStatus.PendingApproval
+                        || r.Status == WithdrawalRequestStatus.ApprovedPendingTransfer))
+                .SumAsync(r => (decimal?)r.Amount) ?? 0m;
+
         public async Task<WalletDto> GetMyWalletAsync(string userId)
         {
             var wallet = await _context.Wallets.SingleOrDefaultAsync(w => w.UserId == userId);
             if (wallet == null)
-                return new WalletDto { UserId = userId, Balance = 0 };
+                return new WalletDto { UserId = userId, Balance = 0, ReservedBalance = 0, AvailableBalance = 0 };
 
+            var reserved = await GetReservedAmountAsync(userId);
             return new WalletDto
             {
                 Id = wallet.Id,
                 UserId = wallet.UserId,
-                Balance = wallet.Balance
+                Balance = wallet.Balance,
+                ReservedBalance = reserved,
+                AvailableBalance = wallet.Balance - reserved
             };
         }
 
@@ -185,64 +201,74 @@ namespace Acadimia.Infrastructure.Services.Wallets
 
         // ==================== Instructor flow: Withdrawal ====================
 
+        // FR-W04: التحقق من الرصيد المتاح (الرصيد - المحجوز) وحجز المبلغ بمجرد إنشاء الطلب
         public async Task<OperationResult> SubmitWithdrawalRequestAsync(string userId, WithdrawalRequestInputDto input)
         {
-            var result = new OperationResult();
+            var result = new OperationResult(false, Messages.Invalid);
+            if (input.Amount <= 0) return result;
+
+            var strategy = _context.Database.CreateExecutionStrategy();
             try
             {
-                var wallet = await _context.Wallets.SingleOrDefaultAsync(w => w.UserId == userId);
-                if (wallet == null)
+                return await strategy.ExecuteAsync(async () =>
                 {
-                    result.Message = Messages.Failed;
-                    return result;
-                }
+                    _context.ChangeTracker.Clear();
+                    var attempt = new OperationResult(false, Messages.Failed);
 
-                if (wallet.Balance < input.Amount)
-                {
-                    // ملاحظة: يفضّل إضافة مفتاح مخصص "InsufficientBalance" في Messages.resx لاحقاً
-                    result.Message = Messages.Failed;
-                    return result;
-                }
+                    // Serializable يمنع طلبين متزامنين من حجز نفس المبلغ
+                    await using var tx = await _context.Database.BeginTransactionAsync(IsolationLevel.Serializable);
 
-                var withdrawalRequest = new WithdrawalRequest
-                {
-                    InstructorId = userId,
-                    Amount = input.Amount,
-                    BankIBAN = input.BankIBAN,
-                    BankName = input.BankName,
-                    AccountHolderName = input.AccountHolderName,
-                    Status = WithdrawalRequestStatus.PendingApproval,
-                    CreatedBy = userId,
-                    CreatedOn = DateTime.Now
-                };
-                await _context.WithdrawalRequests.AddAsync(withdrawalRequest);
-                await _context.SaveChangesAsync();
+                    var wallet = await _context.Wallets.SingleOrDefaultAsync(w => w.UserId == userId);
+                    if (wallet == null) return attempt;
 
-                var transaction = new WalletTransaction
-                {
-                    WalletId = wallet.Id,
-                    Direction = WalletTransactionDirection.Out,
-                    Type = WalletTransactionType.Withdrawal,
-                    Amount = input.Amount,
-                    Status = WalletTransactionStatus.Pending,
-                    Description = $"طلب سحب رصيد إلى {input.BankName}",
-                    RelatedEntityType = nameof(WithdrawalRequest),
-                    RelatedEntityId = withdrawalRequest.Id,
-                    CreatedBy = userId,
-                    CreatedOn = DateTime.Now
-                };
-                await _context.WalletTransactions.AddAsync(transaction);
-                await _context.SaveChangesAsync();
+                    var reserved = await GetReservedAmountAsync(userId);
+                    if (wallet.Balance - reserved < input.Amount)
+                    {
+                        attempt.Message = "الرصيد المتاح غير كافٍ (جزء من رصيدك محجوز لطلبات سحب قائمة)";
+                        return attempt;
+                    }
 
-                result.Success = true;
-                result.Message = Messages.Success;
-                result.ReturnId = withdrawalRequest.Id;
+                    var withdrawalRequest = new WithdrawalRequest
+                    {
+                        InstructorId = userId,
+                        Amount = input.Amount,
+                        BankIBAN = input.BankIBAN,
+                        BankName = input.BankName,
+                        AccountHolderName = input.AccountHolderName,
+                        Status = WithdrawalRequestStatus.PendingApproval,
+                        CreatedBy = userId,
+                        CreatedOn = DateTime.Now
+                    };
+                    await _context.WithdrawalRequests.AddAsync(withdrawalRequest);
+                    await _context.SaveChangesAsync();
+
+                    await _context.WalletTransactions.AddAsync(new WalletTransaction
+                    {
+                        WalletId = wallet.Id,
+                        Direction = WalletTransactionDirection.Out,
+                        Type = WalletTransactionType.Withdrawal,
+                        Amount = input.Amount,
+                        Status = WalletTransactionStatus.Pending,
+                        Description = $"طلب سحب رصيد إلى {input.BankName}",
+                        RelatedEntityType = nameof(WithdrawalRequest),
+                        RelatedEntityId = withdrawalRequest.Id,
+                        CreatedBy = userId,
+                        CreatedOn = DateTime.Now
+                    });
+                    await _context.SaveChangesAsync();
+                    await tx.CommitAsync();
+
+                    attempt.Success = true;
+                    attempt.Message = Messages.Success;
+                    attempt.ReturnId = withdrawalRequest.Id;
+                    return attempt;
+                });
             }
             catch (Exception)
             {
                 result.Message = Messages.Failed;
+                return result;
             }
-            return result;
         }
 
         // ==================== Admin/Finance: Pending lists ====================
@@ -334,33 +360,39 @@ namespace Acadimia.Infrastructure.Services.Wallets
 
         // ==================== Admin/Finance: Withdrawal decision ====================
 
+        // FR-W05a: الرفض يغيّر الحالة إلى Rejected فيخرج الطلب من المبلغ المحجوز تلقائيًا (فك الحجز)
         public async Task<OperationResult> DecideWithdrawalRequestAsync(string adminId, WithdrawalDecisionDto input)
         {
             var result = new OperationResult();
 
             var request = await _context.WithdrawalRequests.SingleOrDefaultAsync(r => r.Id == input.RequestId);
-            if (request == null || request.Status != WithdrawalRequestStatus.PendingApproval)
+
+            // الموافقة فقط من PendingApproval، أما الرفض فمسموح أيضًا بعد الموافقة وقبل اكتمال التحويل
+            var canDecide = request != null && (
+                request.Status == WithdrawalRequestStatus.PendingApproval
+                || (request.Status == WithdrawalRequestStatus.ApprovedPendingTransfer && !input.Approve));
+            if (!canDecide)
             {
                 result.Message = Messages.Failed;
                 return result;
             }
 
             var relatedTransaction = await _context.WalletTransactions
-                .FirstOrDefaultAsync(t => t.RelatedEntityType == nameof(WithdrawalRequest) && t.RelatedEntityId == request.Id);
+                .FirstOrDefaultAsync(t => t.RelatedEntityType == nameof(WithdrawalRequest) && t.RelatedEntityId == request!.Id);
 
             try
             {
                 if (input.Approve)
                 {
-                    // موافقة فقط - المبلغ يُحجز، لا يُخصم إلا عند تأكيد التحويل الفعلي (CompleteWithdrawal)
-                    request.Status = WithdrawalRequestStatus.ApprovedPendingTransfer;
+                    // موافقة فقط - المبلغ يبقى محجوزًا، ولا يُخصم إلا عند تأكيد التحويل الفعلي (CompleteWithdrawal)
+                    request!.Status = WithdrawalRequestStatus.ApprovedPendingTransfer;
 
                     if (relatedTransaction != null)
                         relatedTransaction.Status = WalletTransactionStatus.Accepted;
                 }
                 else
                 {
-                    request.Status = WithdrawalRequestStatus.Rejected;
+                    request!.Status = WithdrawalRequestStatus.Rejected;
                     request.RejectionReason = input.RejectionReason;
 
                     if (relatedTransaction != null)
@@ -385,7 +417,20 @@ namespace Acadimia.Infrastructure.Services.Wallets
             catch (Exception)
             {
                 result.Message = Messages.Failed;
+                return result;
             }
+
+            // فشل الإشعار يجب ألا يُفشل القرار نفسه
+            try
+            {
+                await _notificationService.CreateAsync(request!.InstructorId,
+                    input.Approve ? "تمت الموافقة على طلب السحب" : "تم رفض طلب السحب",
+                    input.Approve
+                        ? $"تمت الموافقة على سحب {request.Amount} وسيتم التحويل قريبًا."
+                        : $"تم رفض طلب السحب وأُعيد المبلغ {request.Amount} إلى رصيدك المتاح.",
+                    NotificationType.Wallet, nameof(WithdrawalRequest), request.Id);
+            }
+            catch (Exception) { /* TODO: log */ }
 
             return result;
         }

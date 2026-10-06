@@ -93,5 +93,11 @@ namespace Acadimia.Api.Controllers
         {
             return await _teacherService.DeleteAsync(id);
         }
+        [HttpGet] // FR-T07
+        public async Task<IActionResult> Reviews(int teacherId, int skip = 0, int pageSize = 10)
+        {
+            var result = await _teacherService.GetReviewsAsync(teacherId, Math.Max(skip, 0), Math.Clamp(pageSize, 1, 50));
+            return Ok(new { recordsFiltered = result.TotalCount, result.TotalCount, result.Data });
+        }
     }
 }

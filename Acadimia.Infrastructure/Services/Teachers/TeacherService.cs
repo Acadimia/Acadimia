@@ -220,6 +220,7 @@ namespace Acadimia.Infrastructure.Services.Teachers
                 Grades = grades.Select(g => g.Grade.Name).ToList(),
                 AverageRating = ratings.Any() ? ratings.Average(r => r.RatingValue) : null,
                 RatingCount = ratings.Count
+                RecentReviews = (await GetReviewsAsync(teacherId, 0, 5)).Data,
             };
         }
        
@@ -324,6 +325,29 @@ namespace Acadimia.Infrastructure.Services.Teachers
                     && (a.EffectiveTo == null || a.EffectiveTo >= date));
 
             return await query.OrderBy(a => a.DayOfWeek).ThenBy(a => a.StartTime).ToListAsync();
+        }
+        public async Task<PagedResultDto<List<TeacherReviewDto>>> GetReviewsAsync(int teacherId, int skip, int pageSize)
+        {
+            var isPublic = await _context.Teachers.AnyAsync(t => t.Id == teacherId && t.IsPublicForDiscovery);
+            if (!isPublic)
+                return new PagedResultDto<List<TeacherReviewDto>> { Data = new List<TeacherReviewDto>(), TotalCount = 0 };
+
+            var query = _context.Set<TeacherRating>().Where(r => r.TeacherId == teacherId);
+
+            return new PagedResultDto<List<TeacherReviewDto>>
+            {
+                TotalCount = await query.CountAsync(),
+                Data = await query.OrderByDescending(r => r.CreatedOn)
+                    .Skip(skip).Take(pageSize)
+                    .Select(r => new TeacherReviewDto
+                    {
+                        Id = r.Id,
+                        RatingValue = r.RatingValue,
+                        Review = r.Review,
+                        StudentName = r.Student != null ? r.Student.Name : null,
+                        CreatedOn = r.CreatedOn
+                    }).ToListAsync()
+            };
         }
     }
 }
