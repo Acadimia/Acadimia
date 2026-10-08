@@ -6,5 +6,8 @@ namespace Acadimia.Infrastructure.Services.Notifications
     {
         Task CreateAsync(string userId, string title, string message, NotificationType type,
             string? relatedEntityType = null, int? relatedEntityId = null);
+
+        Task CreateManyAsync(IEnumerable<string> userIds, string title, string message, NotificationType type,
+            string? relatedEntityType = null, int? relatedEntityId = null);
     }
 }

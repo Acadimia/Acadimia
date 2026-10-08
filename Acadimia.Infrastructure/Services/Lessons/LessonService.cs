@@ -8,14 +8,19 @@ using Acadimia.Infrastructure.Dtos.Lessons;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Acadimia.Infrastructure.Services.Notifications;
 
 namespace Acadimia.Infrastructure.Services.Lessons
 {
     public class LessonService : BaseService, ILessonService
     {
-        public LessonService(ApplicationDbContext context, UserManager<User> userManager, IHttpContextAccessor httpContextAccessor)
+        private readonly INotificationService _notificationService;
+
+        public LessonService(ApplicationDbContext context, UserManager<User> userManager,
+            IHttpContextAccessor httpContextAccessor, INotificationService notificationService)
             : base(context, userManager, httpContextAccessor)
         {
+            _notificationService = notificationService;
         }
 
         private async Task<bool> HasConflictAsync(int? groupId, int? courseId, DateTime date, TimeSpan start, int durationMinutes, int? excludeLessonId)
@@ -159,21 +164,16 @@ namespace Acadimia.Infrastructure.Services.Lessons
             var result = new OperationResult(false, Messages.Invalid);
 
             var lesson = await _context.Lessons.SingleOrDefaultAsync(l => l.Id == input.LessonId);
-            if (lesson == null)
+            if (lesson == null || lesson.Status != LessonStatus.Scheduled)
             {
                 result.Message = Messages.Failed;
                 return result;
             }
 
-            if (lesson.Status != LessonStatus.Scheduled)
-            {
-                result.Message = Messages.Failed; 
-                return result;
-            }
-
             var currentUserId = await GetCurrentUserIdAsync();
 
-            await using var transaction = await _context.Database.BeginTransactionAsync();
+            // SaveChanges واحدة = ذرية بحد ذاتها، ولا حاجة لـ BeginTransaction
+            // (وهو أصلاً يتعارض مع EnableRetryOnFailure في Program.cs)
             try
             {
                 lesson.Status = LessonStatus.Cancelled;
@@ -181,33 +181,51 @@ namespace Acadimia.Infrastructure.Services.Lessons
                 SetUpdatedFields(lesson, currentUserId);
                 _context.Lessons.Update(lesson);
                 SetEntityModifiedFields(lesson);
-
-                var enrolledStudentUserIds = await _context.Enrollments
-                    .Where(e => (lesson.GroupId != null && e.GroupId == lesson.GroupId)
-                             || (lesson.CourseId != null && e.CourseId == lesson.CourseId))
-                    .Where(e => e.Status == EnrollmentStatus.Active)
-                    .Join(_context.Students, e => e.StudentId, s => s.Id, (e, s) => s)
-                    .ToListAsync();
-
-                
-                foreach (var _ in enrolledStudentUserIds)
-                {
-                    
-                }
-
                 await _context.SaveChangesAsync();
-                await transaction.CommitAsync();
-
-                result.Success = true;
-                result.Message = Messages.Success;
             }
             catch (Exception)
             {
-                await transaction.RollbackAsync();
                 result.Message = Messages.Failed;
+                return result;
             }
 
+            // فشل الإشعار يجب ألا يُفشل الإلغاء نفسه
+            try { await NotifyLessonCancelledAsync(lesson, input.Reason); }
+            catch (Exception) { /* TODO: log */ }
+
+            result.Success = true;
+            result.Message = Messages.Success;
             return result;
+        }
+
+        private async Task NotifyLessonCancelledAsync(Lesson lesson, string? reason)
+        {
+            var groupId = lesson.GroupId;
+            var courseId = lesson.CourseId;
+
+            var students = await _context.Enrollments
+                .Where(e => e.Status == EnrollmentStatus.Active
+                    && ((groupId != null && e.GroupId == groupId) || (courseId != null && e.CourseId == courseId)))
+                .Select(e => new { e.StudentId, e.Student.UserId })
+                .Distinct()
+                .ToListAsync();
+            if (students.Count == 0) return;
+
+            var studentIds = students.Select(s => s.StudentId).ToList();
+            var parentUserIds = await _context.ParentStudentLinks
+                .Where(l => studentIds.Contains(l.StudentId))
+                .Select(l => l.ParentUserId)
+                .ToListAsync();
+
+            var recipients = students.Where(s => s.UserId != null).Select(s => s.UserId!)
+                .Concat(parentUserIds).Distinct().ToList();
+
+            var when = $"{lesson.ScheduledDate:yyyy-MM-dd} {lesson.StartTime:hh\\:mm}";
+            var message = $"تم إلغاء الدرس \"{lesson.Title}\" المقرر بتاريخ {when}."
+                          + (string.IsNullOrWhiteSpace(reason) ? "" : $" السبب: {reason}");
+
+            await _notificationService.CreateManyAsync(recipients, "إلغاء درس", message,
+                NotificationType.Schedule, nameof(Lesson), lesson.Id);
         }
 
         public async Task<List<LessonScheduleRowDto>> GetScheduleAsync(int? courseId, int? groupId)

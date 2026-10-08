@@ -18,6 +18,11 @@ using Acadimia.Infrastructure.Services.Users;
 using Acadimia.Infrastructure.Services.UserTypes;
 using Acadimia.Infrastructure.Services.Wallets;
 using Microsoft.Extensions.DependencyInjection;
+using Acadimia.Infrastructure.Services.Ownership;
+using Acadimia.Infrastructure.Services.Notifications;
+using Acadimia.Infrastructure.Services.Bookings;
+using Acadimia.Infrastructure.Services.JoinRequests;
+using Acadimia.Infrastructure.Services.PlatformCommission;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +54,7 @@ namespace Acadimia.Infrastructure.Extentions
             services.AddTransient<IJoinRequestService, JoinRequestService>();
             services.AddTransient<IStudentService, StudentService>();
 
+            services.AddTransient<IPlatformCommissionService, PlatformCommissionService>();
             //services.AddTransient<,>();
             //services.AddTransient<,>();
             //services.AddTransient<,>();
