@@ -118,5 +118,6 @@ app.UseSwaggerUI(c =>
 
 app.MapStaticAssets();
 app.MapControllers();
+await Acadimia.Data.SeedHeper.DatabaseSeeder.SeedAsync(app.Services);
 
 app.Run();

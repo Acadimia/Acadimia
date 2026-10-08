@@ -1,22 +1,23 @@
 ﻿using Acadimia.Infrastructure.Services.Bookings;
+using Acadimia.Infrastructure.Services.Bookings;
 using Acadimia.Infrastructure.Services.Constants;
 using Acadimia.Infrastructure.Services.Courses;
+using Acadimia.Infrastructure.Services.JoinRequests;
 using Acadimia.Infrastructure.Services.Lessons;
 using Acadimia.Infrastructure.Services.Modules;
 using Acadimia.Infrastructure.Services.Notifications;
+using Acadimia.Infrastructure.Services.Notifications;
+using Acadimia.Infrastructure.Services.Ownership;
 using Acadimia.Infrastructure.Services.Ownership;
 using Acadimia.Infrastructure.Services.Pages;
 using Acadimia.Infrastructure.Services.Parent;
+using Acadimia.Infrastructure.Services.Students;
 using Acadimia.Infrastructure.Services.Teachers;
 using Acadimia.Infrastructure.Services.UserPermissions;
 using Acadimia.Infrastructure.Services.Users;
 using Acadimia.Infrastructure.Services.UserTypes;
 using Acadimia.Infrastructure.Services.Wallets;
 using Microsoft.Extensions.DependencyInjection;
-using Acadimia.Infrastructure.Services.Ownership;
-using Acadimia.Infrastructure.Services.Notifications;
-using Acadimia.Infrastructure.Services.Bookings;
-using Acadimia.Infrastructure.Services.JoinRequests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,6 +47,8 @@ namespace Acadimia.Infrastructure.Extentions
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IBookingService, BookingService>();
             services.AddTransient<IJoinRequestService, JoinRequestService>();
+            services.AddTransient<IStudentService, StudentService>();
+
             //services.AddTransient<,>();
             //services.AddTransient<,>();
             //services.AddTransient<,>();

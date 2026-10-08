@@ -17,7 +17,7 @@ namespace Acadimia.Data.DbContext
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            SeedHelper.Seed(builder);
+            SeedHelper.SeedStaticReferenceData(builder); 
             base.OnModelCreating(builder);
             builder.Entity<Student>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Teacher>().HasQueryFilter(x => !x.IsDeleted);
