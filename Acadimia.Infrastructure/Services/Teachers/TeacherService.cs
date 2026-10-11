@@ -219,7 +219,7 @@ namespace Acadimia.Infrastructure.Services.Teachers
                 Subjects = subjects.Select(s => s.Subject.Name).ToList(),
                 Grades = grades.Select(g => g.Grade.Name).ToList(),
                 AverageRating = ratings.Any() ? ratings.Average(r => r.RatingValue) : null,
-                RatingCount = ratings.Count
+                RatingCount = ratings.Count,
                 RecentReviews = (await GetReviewsAsync(teacherId, 0, 5)).Data,
             };
         }
