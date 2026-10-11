@@ -71,7 +71,19 @@ namespace Acadimia.Infrastructure.Services.Users
             return await _context.UserTypes
                 .Select(c => new UserType { Id = c.Id, Name = c.Name }).ToListAsync();
         }
+        public async Task<RegistrationOptionsDto> GetRegistrationOptionsAsync() => new()
+        {
+            Genders = await _context.Constants
+        .Where(c => c.ParentId == (int)GeneralEnums.Gender)
+        .Select(c => new LookupItemDto { Id = c.Id, Name = c.Name }).ToListAsync(),
 
+            UserTypes = await _context.UserTypes
+        .Where(t => UserTypeIds.SelfRegistration.Contains(t.Id))
+        .Select(t => new LookupItemDto { Id = t.Id, Name = t.Name }).ToListAsync(),
+
+            Grades = await _context.Grades
+        .Select(g => new LookupItemDto { Id = g.Id, Name = g.Name + " " + g.Section }).ToListAsync()
+        };
         public async Task<List<Constant>> GetGendersAsync()
         {
             return await _context.Constants.Where(c => c.ParentId == (int)GeneralEnums.Gender)
@@ -170,15 +182,7 @@ namespace Acadimia.Infrastructure.Services.Users
 
             return result;
         }
-        public async Task<RegistrationOptionsDto> GetRegistrationOptionsAsync() => new()
-        {
-            Genders = await _context.Constants
-        .Where(c => c.ParentId == (int)GeneralEnums.Gender)
-        .Select(c => new LookupItemDto { Id = c.Id, Name = c.Name }).ToListAsync(),
-            UserTypes = await _context.UserTypes
-        .Where(t => UserTypeIds.SelfRegistration.Contains(t.Id))
-        .Select(t => new LookupItemDto { Id = t.Id, Name = t.Name }).ToListAsync()
-        };
+        
         public async Task<OperationResult> DeleteAsync(string id)
         {
             var result = new OperationResult();

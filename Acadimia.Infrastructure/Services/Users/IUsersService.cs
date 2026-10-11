@@ -21,5 +21,7 @@ namespace Acadimia.Infrastructure.Services.Users
         Task<OperationResult> EditMyProfileAsync(MyProfileDto input);
         Task<OperationResult> ChangePasswordAsync(string userId, ChangePasswordDto input);
         Task<RegistrationOptionsDto> GetRegistrationOptionsAsync();
+
+
     }
 }

@@ -9,8 +9,8 @@ namespace Acadimia.Data.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public int FatherId { get; set; }
-        public Father Father { get; set; }
+        public int? FatherId { get; set; }
+        public Father? Father { get; set; }
         public int GradeId { get; set; }
         public Grade Grade { get; set; }
         public string WhatsAppNumber { get; set; }

@@ -37,7 +37,7 @@ namespace Acadimia.Infrastructure.Dtos.Auth
         [Display(Name = "Gender", ResourceType = typeof(Messages))]
         [Required(ErrorMessageResourceName = "Required", ErrorMessageResourceType = typeof(Messages))]
         public int GenderId { get; set; }
-
+        public int? GradeId { get; set; }
         public int? UserTypeId { get; set; }
     }
 }

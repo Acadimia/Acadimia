@@ -20,7 +20,16 @@ namespace Acadimia.Data.DbContext
             SeedHelper.SeedStaticReferenceData(builder); 
             base.OnModelCreating(builder);
             builder.Entity<Student>().HasQueryFilter(x => !x.IsDeleted);
+            builder.Entity<Student>(entity =>
+            {
+                entity.HasOne(s => s.User).WithMany().HasForeignKey(s => s.UserId).OnDelete(DeleteBehavior.Restrict);
+                entity.HasIndex(s => s.UserId).IsUnique().HasFilter("[UserId] IS NOT NULL");
+            });
             builder.Entity<Teacher>().HasQueryFilter(x => !x.IsDeleted);
+            builder.Entity<Teacher>(entity =>
+            {
+                entity.HasOne(t => t.Grade).WithMany().HasForeignKey(t => t.GradeId).OnDelete(DeleteBehavior.Restrict);
+            });
             builder.Entity<Group>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Grade>().HasQueryFilter(x => !x.IsDeleted);
             builder.Entity<Father>().HasQueryFilter(x => !x.IsDeleted);

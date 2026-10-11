@@ -4,6 +4,7 @@ using Acadimia.Data.Models;
 using Acadimia.Data.Resources;
 using Acadimia.Infrastructure.Dtos.Auth;
 using Acadimia.Infrastructure.Services;
+using Acadimia.Infrastructure.Services.Registration;
 using Acadimia.Infrastructure.Services.Users;
 using Acadimia.Infrastructure.Services.Wallets;
 using Microsoft.AspNetCore.Authorization;
@@ -20,13 +21,16 @@ namespace Acadimia.Api.Controllers
         private readonly ILogger<AuthController> _logger;
         private readonly IWalletService _walletService;
         private readonly IUsersService _usersService;
+        private readonly IRegistrationService _registrationService;
+
         public AuthController(
             SignInManager<User> signInManager,
             UserManager<User> userManager,
             IClaimsService claimsService,
             ILogger<AuthController> logger,
             IWalletService walletService,
-            IUsersService usersService
+            IUsersService usersService,
+            IRegistrationService registrationService
             )
         {
             _signInManager = signInManager;
@@ -35,6 +39,7 @@ namespace Acadimia.Api.Controllers
             _logger = logger;
             _walletService = walletService;
              _usersService = usersService;
+            _registrationService = registrationService;
 
         }
 
@@ -78,68 +83,18 @@ namespace Acadimia.Api.Controllers
 
             return result;
         }
-
         [HttpPost]
         public async Task<OperationResult> Register(RegisterDto input)
         {
-            var result = new OperationResult();
-
             if (!ModelState.IsValid)
-            {
-                result.Message = string.Join("<br>", ModelState.Values
-                    .SelectMany(v => v.Errors)
-                    .Select(e => e.ErrorMessage));
-                return result;
-            }
+                return new OperationResult(false, string.Join("<br>",
+                    ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage)));
 
-            var existingByEmail = await _userManager.FindByNameAsync(input.Email);
-            if (existingByEmail != null)
-            {
-                result.Message = Messages.UniqueEmail;
-                return result;
-            }
-            var userTypeId = input.UserTypeId ?? UserTypeIds.Student;
-
-            if (!UserTypeIds.SelfRegistration.Contains(userTypeId))
-            {
-                result.Message = Messages.Invalid;
-                return result;
-            }
-            var user = new User
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = input.Name,
-                Email = input.Email,
-                UserName = input.Email,
-                PhoneNumber = input.PhoneNumber,
-                GenderId = input.GenderId,
-                UserTypeId = input.UserTypeId ?? 2,
-                IsActive = true,
-                Avatar = "default_avatar.png",
-                CreatedOn = DateTime.Now
-            };
-
-            var createResult = await _userManager.CreateAsync(user, input.Password);
-
-            if (!createResult.Succeeded)
-            {
-                var errorMessages = createResult.Errors.Select(e => e.Description).ToList();
-                result.Message = string.Join("<br>", errorMessages);
-                return result;
-            }
-
-            // إنشاء Wallet للمستخدم الجديد عبر WalletService
-            var walletResult = await _walletService.CreateWalletForUserAsync(user.Id);
-            if (!walletResult.Success)
-            {
-                _logger.LogError("Failed to create wallet for user {UserId}: {Message}", user.Id, walletResult.Message);
-            }
+            var (result, user) = await _registrationService.RegisterAsync(input);
+            if (!result.Success || user == null) return result;
 
             await _claimsService.UpdateUserClaims(user);
             await _signInManager.SignInAsync(user, isPersistent: false);
-
-            result.Success = true;
-            result.Message = Messages.Success;
             return result;
         }
 

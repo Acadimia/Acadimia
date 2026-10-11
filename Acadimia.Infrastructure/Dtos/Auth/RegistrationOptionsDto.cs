@@ -6,5 +6,7 @@
     {
         public List<LookupItemDto> Genders { get; set; } = new();
         public List<LookupItemDto> UserTypes { get; set; } = new();
+        public List<LookupItemDto> Grades { get; set; } = new();
+
     }
 }

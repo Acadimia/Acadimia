@@ -1524,7 +1524,7 @@ namespace Acadimia.Data.Migrations
                     b.Property<string>("DeletedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("FatherId")
+                    b.Property<int?>("FatherId")
                         .HasColumnType("int");
 
                     b.Property<int>("GradeId")
@@ -1559,7 +1559,9 @@ namespace Acadimia.Data.Migrations
 
                     b.HasIndex("GradeId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Students");
                 });
@@ -1622,7 +1624,7 @@ namespace Acadimia.Data.Migrations
                     b.Property<int>("ExperienceYears")
                         .HasColumnType("int");
 
-                    b.Property<int>("GradeId")
+                    b.Property<int?>("GradeId")
                         .HasColumnType("int");
 
                     b.Property<decimal?>("HourlyPriceInPerson")
@@ -2800,9 +2802,7 @@ namespace Acadimia.Data.Migrations
                 {
                     b.HasOne("Acadimia.Data.Models.Father", "Father")
                         .WithMany()
-                        .HasForeignKey("FatherId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("FatherId");
 
                     b.HasOne("Acadimia.Data.Models.Grade", "Grade")
                         .WithMany()
@@ -2812,7 +2812,8 @@ namespace Acadimia.Data.Migrations
 
                     b.HasOne("Acadimia.Data.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("Father");
 
@@ -2826,8 +2827,7 @@ namespace Acadimia.Data.Migrations
                     b.HasOne("Acadimia.Data.Models.Grade", "Grade")
                         .WithMany()
                         .HasForeignKey("GradeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Acadimia.Data.Models.User", "User")
                         .WithMany()
